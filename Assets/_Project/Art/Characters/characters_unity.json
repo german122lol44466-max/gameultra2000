@@ -1,0 +1,2094 @@
+{
+ "characters": [
+  {
+   "name": "Stormtrooper",
+   "title": "Штурмовик",
+   "weapon": "E11",
+   "height": 1.83,
+   "style": "rifle",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Aim",
+     "frames": 60,
+     "loop": true
+    },
+    {
+     "name": "AimIn",
+     "frames": 8,
+     "loop": false
+    },
+    {
+     "name": "Fire",
+     "frames": 10,
+     "loop": false
+    },
+    {
+     "name": "Reload",
+     "frames": 62,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 20,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Undersuit_Black",
+     "color": [
+      0.018,
+      0.018,
+      0.02
+     ],
+     "smoothness": 0.2,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Glove_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Armor_White",
+     "color": [
+      0.82,
+      0.82,
+      0.8
+     ],
+     "smoothness": 0.78,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Detail_Grey",
+     "color": [
+      0.32,
+      0.32,
+      0.33
+     ],
+     "smoothness": 0.6,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Blue",
+     "color": [
+      0.05,
+      0.15,
+      0.6
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      0.3,
+      1.05,
+      3.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Red",
+     "color": [
+      0.6,
+      0.02,
+      0.02
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      4.0,
+      0.32,
+      0.2
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Detail_BlueGrey",
+     "color": [
+      0.22,
+      0.27,
+      0.33
+     ],
+     "smoothness": 0.65,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Black_Gloss",
+     "color": [
+      0.01,
+      0.01,
+      0.012
+     ],
+     "smoothness": 0.88,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lens_Dark",
+     "color": [
+      0.004,
+      0.012,
+      0.008
+     ],
+     "smoothness": 0.96,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Grey",
+     "color": [
+      0.25,
+      0.25,
+      0.26
+     ],
+     "smoothness": 0.7,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Gunmetal",
+     "color": [
+      0.06,
+      0.06,
+      0.065
+     ],
+     "smoothness": 0.62,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lens_Red",
+     "color": [
+      0.3,
+      0.0,
+      0.0
+     ],
+     "smoothness": 0.95,
+     "metallic": 0.0,
+     "emission": [
+      1.0,
+      0.05,
+      0.02
+     ],
+     "alpha": 1.0
+    }
+   ]
+  },
+  {
+   "name": "HeavyTrooper",
+   "title": "Тяжёлый штурмовик",
+   "weapon": "DLT19",
+   "height": 1.85,
+   "style": "rifle",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Aim",
+     "frames": 60,
+     "loop": true
+    },
+    {
+     "name": "AimIn",
+     "frames": 8,
+     "loop": false
+    },
+    {
+     "name": "Fire",
+     "frames": 10,
+     "loop": false
+    },
+    {
+     "name": "Reload",
+     "frames": 62,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 20,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Undersuit_Black",
+     "color": [
+      0.018,
+      0.018,
+      0.02
+     ],
+     "smoothness": 0.2,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Glove_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Armor_White",
+     "color": [
+      0.82,
+      0.82,
+      0.8
+     ],
+     "smoothness": 0.78,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Detail_Grey",
+     "color": [
+      0.32,
+      0.32,
+      0.33
+     ],
+     "smoothness": 0.6,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Blue",
+     "color": [
+      0.05,
+      0.15,
+      0.6
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      0.3,
+      1.05,
+      3.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Red",
+     "color": [
+      0.6,
+      0.02,
+      0.02
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      4.0,
+      0.32,
+      0.2
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Detail_BlueGrey",
+     "color": [
+      0.22,
+      0.27,
+      0.33
+     ],
+     "smoothness": 0.65,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Black_Gloss",
+     "color": [
+      0.01,
+      0.01,
+      0.012
+     ],
+     "smoothness": 0.88,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lens_Dark",
+     "color": [
+      0.004,
+      0.012,
+      0.008
+     ],
+     "smoothness": 0.96,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Grey",
+     "color": [
+      0.25,
+      0.25,
+      0.26
+     ],
+     "smoothness": 0.7,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Pauldron_Black",
+     "color": [
+      0.03,
+      0.03,
+      0.032
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Gunmetal",
+     "color": [
+      0.06,
+      0.06,
+      0.065
+     ],
+     "smoothness": 0.62,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lens_Red",
+     "color": [
+      0.3,
+      0.0,
+      0.0
+     ],
+     "smoothness": 0.95,
+     "metallic": 0.0,
+     "emission": [
+      1.0,
+      0.05,
+      0.02
+     ],
+     "alpha": 1.0
+    }
+   ]
+  },
+  {
+   "name": "TrooperCommander",
+   "title": "Командир штурмовиков",
+   "weapon": "E11",
+   "height": 1.83,
+   "style": "rifle",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Aim",
+     "frames": 60,
+     "loop": true
+    },
+    {
+     "name": "AimIn",
+     "frames": 8,
+     "loop": false
+    },
+    {
+     "name": "Fire",
+     "frames": 10,
+     "loop": false
+    },
+    {
+     "name": "Reload",
+     "frames": 62,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 20,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Undersuit_Black",
+     "color": [
+      0.018,
+      0.018,
+      0.02
+     ],
+     "smoothness": 0.2,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Glove_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Armor_White",
+     "color": [
+      0.82,
+      0.82,
+      0.8
+     ],
+     "smoothness": 0.78,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Detail_Grey",
+     "color": [
+      0.32,
+      0.32,
+      0.33
+     ],
+     "smoothness": 0.6,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Blue",
+     "color": [
+      0.05,
+      0.15,
+      0.6
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      0.3,
+      1.05,
+      3.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Red",
+     "color": [
+      0.6,
+      0.02,
+      0.02
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      4.0,
+      0.32,
+      0.2
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Detail_BlueGrey",
+     "color": [
+      0.22,
+      0.27,
+      0.33
+     ],
+     "smoothness": 0.65,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Black_Gloss",
+     "color": [
+      0.01,
+      0.01,
+      0.012
+     ],
+     "smoothness": 0.88,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lens_Dark",
+     "color": [
+      0.004,
+      0.012,
+      0.008
+     ],
+     "smoothness": 0.96,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Grey",
+     "color": [
+      0.25,
+      0.25,
+      0.26
+     ],
+     "smoothness": 0.7,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Pauldron_Orange",
+     "color": [
+      0.75,
+      0.25,
+      0.04
+     ],
+     "smoothness": 0.65,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Gunmetal",
+     "color": [
+      0.06,
+      0.06,
+      0.065
+     ],
+     "smoothness": 0.62,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lens_Red",
+     "color": [
+      0.3,
+      0.0,
+      0.0
+     ],
+     "smoothness": 0.95,
+     "metallic": 0.0,
+     "emission": [
+      1.0,
+      0.05,
+      0.02
+     ],
+     "alpha": 1.0
+    }
+   ]
+  },
+  {
+   "name": "DarthVader",
+   "title": "Дарт Вейдер",
+   "weapon": "Saber_Vader",
+   "height": 2.02,
+   "style": "vader",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Ignite",
+     "frames": 40,
+     "loop": false
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Attack1",
+     "frames": 32,
+     "loop": false
+    },
+    {
+     "name": "Attack2",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "Attack3",
+     "frames": 42,
+     "loop": false
+    },
+    {
+     "name": "Block",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "ForcePush",
+     "frames": 44,
+     "loop": false
+    },
+    {
+     "name": "ForceChoke",
+     "frames": 90,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 22,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Vader_Cloth",
+     "color": [
+      0.012,
+      0.012,
+      0.014
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Vader_Leather",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.6,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Glove_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Vader_Gloss",
+     "color": [
+      0.012,
+      0.012,
+      0.014
+     ],
+     "smoothness": 0.88,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Grey",
+     "color": [
+      0.25,
+      0.25,
+      0.26
+     ],
+     "smoothness": 0.7,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Red",
+     "color": [
+      0.6,
+      0.02,
+      0.02
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      4.0,
+      0.32,
+      0.2
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Green",
+     "color": [
+      0.05,
+      0.5,
+      0.1
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      0.3,
+      3.0,
+      0.6
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_Blue",
+     "color": [
+      0.05,
+      0.15,
+      0.6
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      0.3,
+      1.05,
+      3.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Vader_Mask",
+     "color": [
+      0.035,
+      0.035,
+      0.04
+     ],
+     "smoothness": 0.75,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Vader_Lens",
+     "color": [
+      0.018,
+      0.002,
+      0.002
+     ],
+     "smoothness": 0.95,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Light_White",
+     "color": [
+      0.8,
+      0.8,
+      0.8
+     ],
+     "smoothness": 0.7,
+     "metallic": 0.0,
+     "emission": [
+      2.0,
+      2.0,
+      2.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Blade_Red",
+     "color": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "smoothness": 1.0,
+     "metallic": 0.0,
+     "emission": [
+      6.0,
+      0.12,
+      0.06
+     ],
+     "alpha": 1.0
+    }
+   ]
+  },
+  {
+   "name": "DarthMaul",
+   "title": "Дарт Мол",
+   "weapon": "Saber_Maul",
+   "height": 1.75,
+   "style": "maul",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Ignite",
+     "frames": 40,
+     "loop": false
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Attack1",
+     "frames": 32,
+     "loop": false
+    },
+    {
+     "name": "Attack2",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "Attack3",
+     "frames": 48,
+     "loop": false
+    },
+    {
+     "name": "Block",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "ForcePush",
+     "frames": 44,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 22,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Maul_Cloth",
+     "color": [
+      0.016,
+      0.015,
+      0.016
+     ],
+     "smoothness": 0.2,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Glove_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Boot_Black",
+     "color": [
+      0.015,
+      0.015,
+      0.016
+     ],
+     "smoothness": 0.72,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Maul_Sash",
+     "color": [
+      0.03,
+      0.028,
+      0.028
+     ],
+     "smoothness": 0.3,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Leather_Dark",
+     "color": [
+      0.03,
+      0.02,
+      0.015
+     ],
+     "smoothness": 0.58,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Maul_Red",
+     "color": [
+      0.45,
+      0.025,
+      0.02
+     ],
+     "smoothness": 0.55,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Maul_Black",
+     "color": [
+      0.012,
+      0.01,
+      0.01
+     ],
+     "smoothness": 0.55,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lips",
+     "color": [
+      0.25,
+      0.1,
+      0.09
+     ],
+     "smoothness": 0.45,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Eye_White",
+     "color": [
+      0.75,
+      0.7,
+      0.62
+     ],
+     "smoothness": 0.85,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Eye_Sith",
+     "color": [
+      0.9,
+      0.55,
+      0.02
+     ],
+     "smoothness": 0.9,
+     "metallic": 0.0,
+     "emission": [
+      0.6,
+      0.3,
+      0.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Horn",
+     "color": [
+      0.55,
+      0.48,
+      0.38
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Blade_Red",
+     "color": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "smoothness": 1.0,
+     "metallic": 0.0,
+     "emission": [
+      6.0,
+      0.12,
+      0.06
+     ],
+     "alpha": 1.0
+    }
+   ]
+  },
+  {
+   "name": "DarthSidious",
+   "title": "Дарт Сидиус",
+   "weapon": "Saber_Sidious",
+   "height": 1.73,
+   "style": "sidious",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Ignite",
+     "frames": 40,
+     "loop": false
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Attack1",
+     "frames": 32,
+     "loop": false
+    },
+    {
+     "name": "Attack2",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "Attack3",
+     "frames": 42,
+     "loop": false
+    },
+    {
+     "name": "Block",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "ForcePush",
+     "frames": 44,
+     "loop": false
+    },
+    {
+     "name": "ForceLightning",
+     "frames": 75,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 22,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Robe_Black",
+     "color": [
+      0.012,
+      0.011,
+      0.012
+     ],
+     "smoothness": 0.3,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Skin_Sidious",
+     "color": [
+      0.24,
+      0.2,
+      0.17
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Boot_Black",
+     "color": [
+      0.015,
+      0.015,
+      0.016
+     ],
+     "smoothness": 0.72,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lips",
+     "color": [
+      0.25,
+      0.1,
+      0.09
+     ],
+     "smoothness": 0.45,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Eye_White",
+     "color": [
+      0.75,
+      0.7,
+      0.62
+     ],
+     "smoothness": 0.85,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Eye_Sith",
+     "color": [
+      0.9,
+      0.55,
+      0.02
+     ],
+     "smoothness": 0.9,
+     "metallic": 0.0,
+     "emission": [
+      0.6,
+      0.3,
+      0.0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Gold",
+     "color": [
+      0.85,
+      0.62,
+      0.3
+     ],
+     "smoothness": 0.8,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Blade_Red",
+     "color": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "smoothness": 1.0,
+     "metallic": 0.0,
+     "emission": [
+      6.0,
+      0.12,
+      0.06
+     ],
+     "alpha": 1.0
+    }
+   ]
+  },
+  {
+   "name": "CountDooku",
+   "title": "Граф Дуку (Дарт Тиранус)",
+   "weapon": "Saber_Dooku",
+   "height": 1.93,
+   "style": "dooku",
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "loop": true
+    },
+    {
+     "name": "Ignite",
+     "frames": 40,
+     "loop": false
+    },
+    {
+     "name": "Walk",
+     "frames": 32,
+     "loop": true
+    },
+    {
+     "name": "Run",
+     "frames": 20,
+     "loop": true
+    },
+    {
+     "name": "Attack1",
+     "frames": 32,
+     "loop": false
+    },
+    {
+     "name": "Attack2",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "Attack3",
+     "frames": 42,
+     "loop": false
+    },
+    {
+     "name": "Block",
+     "frames": 34,
+     "loop": false
+    },
+    {
+     "name": "ForcePush",
+     "frames": 44,
+     "loop": false
+    },
+    {
+     "name": "Hit",
+     "frames": 22,
+     "loop": false
+    },
+    {
+     "name": "Death",
+     "frames": 60,
+     "loop": false
+    }
+   ],
+   "materials": [
+    {
+     "name": "Dooku_Tunic",
+     "color": [
+      0.05,
+      0.035,
+      0.025
+     ],
+     "smoothness": 0.2,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Glove_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.5,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Boot_Black",
+     "color": [
+      0.015,
+      0.015,
+      0.016
+     ],
+     "smoothness": 0.72,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Rubber_Black",
+     "color": [
+      0.025,
+      0.025,
+      0.025
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Dooku_Overtunic",
+     "color": [
+      0.035,
+      0.025,
+      0.018
+     ],
+     "smoothness": 0.25,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Leather_Brown",
+     "color": [
+      0.12,
+      0.06,
+      0.03
+     ],
+     "smoothness": 0.58,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Silver",
+     "color": [
+      0.7,
+      0.7,
+      0.72
+     ],
+     "smoothness": 0.82,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Dooku_Cape",
+     "color": [
+      0.03,
+      0.018,
+      0.012
+     ],
+     "smoothness": 0.4,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Skin_Dooku",
+     "color": [
+      0.3,
+      0.17,
+      0.12
+     ],
+     "smoothness": 0.45,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Lips",
+     "color": [
+      0.25,
+      0.1,
+      0.09
+     ],
+     "smoothness": 0.45,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Eye_White",
+     "color": [
+      0.75,
+      0.7,
+      0.62
+     ],
+     "smoothness": 0.85,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Eye_Brown",
+     "color": [
+      0.1,
+      0.05,
+      0.02
+     ],
+     "smoothness": 0.9,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Hair_White",
+     "color": [
+      0.36,
+      0.35,
+      0.33
+     ],
+     "smoothness": 0.45,
+     "metallic": 0.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Metal_Black",
+     "color": [
+      0.02,
+      0.02,
+      0.022
+     ],
+     "smoothness": 0.55,
+     "metallic": 1.0,
+     "emission": [
+      0,
+      0,
+      0
+     ],
+     "alpha": 1.0
+    },
+    {
+     "name": "Blade_Red",
+     "color": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "smoothness": 1.0,
+     "metallic": 0.0,
+     "emission": [
+      6.0,
+      0.12,
+      0.06
+     ],
+     "alpha": 1.0
+    }
+   ]
+  }
+ ]
+}

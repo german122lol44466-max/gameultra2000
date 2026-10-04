@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тестовая карта — Star Wars</title>
+<style>
+  :root { --bg: #05060a; --panel: rgba(12, 14, 20, 0.86); --line: #2a2f3a; --text: #e6e8ee; --dim: #9aa1ad; --gold: #ffd34d; --red: #ff4a3a; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 14px/1.35 system-ui, "Segoe UI", Roboto, sans-serif; overflow: hidden; }
+  #view { position: fixed; inset: 0; }
+  #panel { position: fixed; left: 12px; top: 12px; bottom: 12px; width: 290px; background: var(--panel); border: 1px solid var(--line);
+           border-radius: 10px; padding: 12px; overflow-y: auto; backdrop-filter: blur(4px); }
+  #panel h1 { font-size: 17px; margin: 0 0 4px; color: var(--gold); letter-spacing: .5px; }
+  #panel p { color: var(--dim); margin: 0 0 10px; font-size: 12px; }
+  .char { display: block; width: 100%; text-align: left; margin: 4px 0; padding: 7px 9px; background: #151922; color: var(--text);
+          border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-weight: 600; }
+  .char.sel { border-color: var(--gold); }
+  .clips { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 8px 8px; }
+  .clip { padding: 3px 7px; border-radius: 5px; border: 1px solid var(--line); background: #10131a; color: var(--dim); cursor: pointer; font-size: 12px; }
+  .clip.on { color: #fff; border-color: var(--red); background: #2a1210; }
+  label.tg { display: flex; gap: 6px; align-items: center; margin: 6px 0 8px; color: var(--dim); }
+  .tag { position: fixed; transform: translate(-50%, -100%); text-align: center; pointer-events: none; text-shadow: 0 1px 3px #000; white-space: nowrap; }
+  .tag b { display: block; font-size: 14px; }
+  .tag i { display: block; font-style: normal; font-size: 12px; color: var(--gold); }
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; font-size: 18px; color: var(--dim); }
+  @media (max-width: 700px) { #panel { width: auto; right: 12px; bottom: auto; max-height: 40vh; } }
+</style>
+<script type="importmap">
+  { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }
+</script>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="tags"></div>
+<div id="panel">
+  <h1>Тестовая карта</h1>
+  <p>ЛКМ — вращать, ПКМ — сдвиг, колесо — зум. Клик по персонажу в списке — камера к нему. Клипы можно запускать вручную.</p>
+  <label class="tg"><input type="checkbox" id="auto" checked> Автосмена клипов</label>
+  <div id="list"></div>
+</div>
+<div id="loading">Загрузка моделей…</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

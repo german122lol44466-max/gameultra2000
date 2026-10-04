@@ -1,0 +1,287 @@
+{
+ "name": "TrooperCommander",
+ "materials": {
+  "Undersuit_Black": {
+   "color": [
+    0.018,
+    0.018,
+    0.02
+   ],
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Glove_Black": {
+   "color": [
+    0.02,
+    0.02,
+    0.022
+   ],
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Armor_White": {
+   "color": [
+    0.82,
+    0.82,
+    0.8
+   ],
+   "smoothness": 0.78,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Detail_Grey": {
+   "color": [
+    0.32,
+    0.32,
+    0.33
+   ],
+   "smoothness": 0.6,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Light_Blue": {
+   "color": [
+    0.05,
+    0.15,
+    0.6
+   ],
+   "smoothness": 0.7,
+   "metallic": 0.0,
+   "emission": [
+    0.3,
+    1.05,
+    3.0
+   ],
+   "alpha": 1.0
+  },
+  "Light_Red": {
+   "color": [
+    0.6,
+    0.02,
+    0.02
+   ],
+   "smoothness": 0.7,
+   "metallic": 0.0,
+   "emission": [
+    4.0,
+    0.32,
+    0.2
+   ],
+   "alpha": 1.0
+  },
+  "Detail_BlueGrey": {
+   "color": [
+    0.22,
+    0.27,
+    0.33
+   ],
+   "smoothness": 0.65,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Metal_Silver": {
+   "color": [
+    0.7,
+    0.7,
+    0.72
+   ],
+   "smoothness": 0.82,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Metal_Black": {
+   "color": [
+    0.02,
+    0.02,
+    0.022
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Black_Gloss": {
+   "color": [
+    0.01,
+    0.01,
+    0.012
+   ],
+   "smoothness": 0.88,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Lens_Dark": {
+   "color": [
+    0.004,
+    0.012,
+    0.008
+   ],
+   "smoothness": 0.96,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Metal_Grey": {
+   "color": [
+    0.25,
+    0.25,
+    0.26
+   ],
+   "smoothness": 0.7,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Rubber_Black": {
+   "color": [
+    0.025,
+    0.025,
+    0.025
+   ],
+   "smoothness": 0.25,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Pauldron_Orange": {
+   "color": [
+    0.75,
+    0.25,
+    0.04
+   ],
+   "smoothness": 0.65,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Metal_Gunmetal": {
+   "color": [
+    0.06,
+    0.06,
+    0.065
+   ],
+   "smoothness": 0.62,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  "Lens_Red": {
+   "color": [
+    0.3,
+    0.0,
+    0.0
+   ],
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "emission": [
+    1.0,
+    0.05,
+    0.02
+   ],
+   "alpha": 1.0
+  }
+ },
+ "clips": {
+  "Idle": {
+   "frames": 90,
+   "loop": true
+  },
+  "Walk": {
+   "frames": 32,
+   "loop": true
+  },
+  "Run": {
+   "frames": 20,
+   "loop": true
+  },
+  "Aim": {
+   "frames": 60,
+   "loop": true
+  },
+  "AimIn": {
+   "frames": 8,
+   "loop": false
+  },
+  "Fire": {
+   "frames": 10,
+   "loop": false
+  },
+  "Reload": {
+   "frames": 62,
+   "loop": false
+  },
+  "Hit": {
+   "frames": 20,
+   "loop": false
+  },
+  "Death": {
+   "frames": 60,
+   "loop": false
+  }
+ },
+ "title": "Командир штурмовиков",
+ "weapon": "E11",
+ "height": 1.83,
+ "style": "rifle"
+}

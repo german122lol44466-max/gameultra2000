@@ -1,0 +1,56 @@
+"""Общая палитра материалов. Имена материалов попадают в FBX — по ним Unity-проект настраивает шейдеры."""
+
+from . import kit as K
+
+
+def palette(char=None):
+    M = {
+        "armor": K.mat_plastic("Armor_White", (0.82, 0.82, 0.8), rough=0.22, coat=0.4),
+        "suit": K.mat_cloth("Undersuit_Black", (0.018, 0.018, 0.02), rough=0.8),
+        "glove": K.mat_leather("Glove_Black", (0.02, 0.02, 0.022), rough=0.5),
+        "lens": K.mat_flat("Lens_Dark", (0.004, 0.012, 0.008), rough=0.04, coat=1.0),
+        "lens_red": K.mat_flat("Lens_Red", (0.3, 0.0, 0.0), rough=0.05, emission=(1, 0.05, 0.02), strength=1.0),
+        "blue_grey": K.mat_plastic("Detail_BlueGrey", (0.22, 0.27, 0.33), rough=0.35, dirt=0.0),
+        "grey": K.mat_plastic("Detail_Grey", (0.32, 0.32, 0.33), rough=0.4, dirt=0.0),
+        "black_gloss": K.mat_flat("Black_Gloss", (0.01, 0.01, 0.012), rough=0.12, coat=1.0),
+        "rubber": K.mat_flat("Rubber_Black", (0.025, 0.025, 0.025), rough=0.75),
+        "metal_dark": K.mat_metal("Metal_Gunmetal", (0.06, 0.06, 0.065), rough=0.38),
+        "metal_black": K.mat_metal("Metal_Black", (0.02, 0.02, 0.022), rough=0.45, scratch=0.25),
+        "metal_grey": K.mat_metal("Metal_Grey", (0.25, 0.25, 0.26), rough=0.3),
+        "metal_silver": K.mat_metal("Metal_Silver", (0.7, 0.7, 0.72), rough=0.18, scratch=0.3),
+        "metal_gold": K.mat_metal("Metal_Gold", (0.85, 0.62, 0.3), rough=0.2, scratch=0.2),
+        "btn_red": K.mat_flat("Light_Red", (0.6, 0.02, 0.02), rough=0.3, emission=(1, 0.08, 0.05), strength=4.0),
+        "btn_green": K.mat_flat("Light_Green", (0.05, 0.5, 0.1), rough=0.3, emission=(0.1, 1, 0.2), strength=3.0),
+        "btn_blue": K.mat_flat("Light_Blue", (0.05, 0.15, 0.6), rough=0.3, emission=(0.1, 0.35, 1), strength=3.0),
+        "btn_white": K.mat_flat("Light_White", (0.8, 0.8, 0.8), rough=0.3, emission=(1, 1, 1), strength=2.0),
+        "orange": K.mat_plastic("Pauldron_Orange", (0.75, 0.25, 0.04), rough=0.35, dirt=0.1),
+        "pauldron_black": K.mat_plastic("Pauldron_Black", (0.03, 0.03, 0.032), rough=0.3, dirt=0.0),
+        "leather_brown": K.mat_leather("Leather_Brown", (0.12, 0.06, 0.03)),
+        "blade": K.mat_blade("Blade_Red", (1.0, 0.02, 0.01)),
+        "glow": K.mat_glow("BladeGlow_Red", (1.0, 0.03, 0.01)),
+        # --- ситхи
+        "vader_gloss": K.mat_plastic("Vader_Gloss", (0.012, 0.012, 0.014), rough=0.12, dirt=0.0, scuff=0.15, coat=1.0),
+        "vader_mask": K.mat_metal("Vader_Mask", (0.035, 0.035, 0.04), rough=0.25, scratch=0.25),
+        "vader_lens": K.mat_flat("Vader_Lens", (0.018, 0.002, 0.002), rough=0.05, coat=1.0, emission=None, strength=0.0),
+        "vader_leather": K.mat_leather("Vader_Leather", (0.02, 0.02, 0.022), rough=0.4),
+        "vader_cloth": K.mat_cloth("Vader_Cloth", (0.012, 0.012, 0.014), rough=0.75, dirt=0.0),
+        "boot": K.mat_leather("Boot_Black", (0.015, 0.015, 0.016), rough=0.28),
+        "maul_red": K.mat_skin("Maul_Red", (0.45, 0.025, 0.02), wrinkles=0.1, rough=0.45),
+        "maul_black": K.mat_skin("Maul_Black", (0.012, 0.01, 0.01), wrinkles=0.1, rough=0.45),
+        "maul_cloth": K.mat_cloth("Maul_Cloth", (0.016, 0.015, 0.016), rough=0.8, dirt=0.05),
+        "maul_cloth2": K.mat_cloth("Maul_Sash", (0.03, 0.028, 0.028), rough=0.7, weave=200.0, dirt=0.0),
+        "leather_dark": K.mat_leather("Leather_Dark", (0.03, 0.02, 0.015)),
+        "horn": K.mat_flat("Horn", (0.55, 0.48, 0.38), rough=0.5),
+        "eye_yellow": K.mat_flat("Eye_Sith", (0.9, 0.55, 0.02), rough=0.1, emission=(1.0, 0.5, 0.0), strength=0.6),
+        "eye_white": K.mat_flat("Eye_White", (0.75, 0.7, 0.62), rough=0.15),
+        "eye_brown": K.mat_flat("Eye_Brown", (0.1, 0.05, 0.02), rough=0.1),
+        "lips": K.mat_skin("Lips", (0.25, 0.1, 0.09), wrinkles=0.2),
+        "robe_black": K.mat_cloth("Robe_Black", (0.012, 0.011, 0.012), rough=0.7, weave=80.0, dirt=0.0),
+        "skin_pale": K.mat_skin("Skin_Sidious", (0.24, 0.2, 0.17), wrinkles=0.35, rough=0.5),
+        "skin_old": K.mat_skin("Skin_Dooku", (0.3, 0.17, 0.12), wrinkles=0.2),
+        "dooku_cloth": K.mat_cloth("Dooku_Tunic", (0.05, 0.035, 0.025), rough=0.8, dirt=0.0),
+        "dooku_cloth2": K.mat_cloth("Dooku_Overtunic", (0.035, 0.025, 0.018), rough=0.75, dirt=0.0),
+        "dooku_cape": K.mat_cloth("Dooku_Cape", (0.03, 0.018, 0.012), rough=0.6, weave=60.0, dirt=0.0),
+        "hair_white": K.mat_cloth("Hair_White", (0.36, 0.35, 0.33), rough=0.55, weave=500.0, dirt=0.0),
+    }
+    return M

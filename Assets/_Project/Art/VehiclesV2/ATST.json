@@ -1,0 +1,106 @@
+{
+ "side": "Empire",
+ "title": "AT-ST",
+ "kind": "walker",
+ "health": 1500,
+ "speed": 2.2,
+ "crew": "Stormtrooper",
+ "crew_clip": "Drive",
+ "hidden_crew": true,
+ "name": "ATST",
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 90,
+   "loop": true
+  },
+  {
+   "name": "Walk",
+   "frames": 72,
+   "loop": true
+  },
+  {
+   "name": "Fire",
+   "frames": 12,
+   "loop": false
+  },
+  {
+   "name": "Death",
+   "frames": 60,
+   "loop": false
+  }
+ ],
+ "materials": [
+  {
+   "name": "Imperial_Grey",
+   "color": [
+    0.33,
+    0.34,
+    0.36
+   ],
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Viewport_Dark",
+   "color": [
+    0.01,
+    0.012,
+    0.014
+   ],
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Imperial_Dark",
+   "color": [
+    0.08,
+    0.085,
+    0.09
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Piston_Chrome",
+   "color": [
+    0.6,
+    0.6,
+    0.62
+   ],
+   "smoothness": 0.85,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  }
+ ],
+ "muzzles": [
+  "Muzzle.0",
+  "Muzzle.1",
+  "Muzzle.2"
+ ],
+ "stride": 2.6,
+ "period": 2.4
+}

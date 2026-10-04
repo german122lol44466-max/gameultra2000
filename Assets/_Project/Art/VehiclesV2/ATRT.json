@@ -1,0 +1,119 @@
+{
+ "side": "Republic",
+ "title": "AT-RT",
+ "kind": "walker",
+ "health": 700,
+ "speed": 2.3,
+ "crew": "CloneTrooper",
+ "crew_clip": "Drive",
+ "name": "ATRT",
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 90,
+   "loop": true
+  },
+  {
+   "name": "Walk",
+   "frames": 34,
+   "loop": true
+  },
+  {
+   "name": "Fire",
+   "frames": 12,
+   "loop": false
+  },
+  {
+   "name": "Death",
+   "frames": 60,
+   "loop": false
+  }
+ ],
+ "materials": [
+  {
+   "name": "Republic_Olive",
+   "color": [
+    0.22,
+    0.24,
+    0.17
+   ],
+   "smoothness": 0.45,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Republic_White",
+   "color": [
+    0.62,
+    0.62,
+    0.6
+   ],
+   "smoothness": 0.55,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Republic_Red",
+   "color": [
+    0.45,
+    0.04,
+    0.03
+   ],
+   "smoothness": 0.55,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Imperial_Dark",
+   "color": [
+    0.08,
+    0.085,
+    0.09
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Piston_Chrome",
+   "color": [
+    0.6,
+    0.6,
+    0.62
+   ],
+   "smoothness": 0.85,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  }
+ ],
+ "muzzles": [
+  "Muzzle.0"
+ ],
+ "stride": 1.3,
+ "period": 1.15
+}

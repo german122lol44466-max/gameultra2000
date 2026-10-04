@@ -1,0 +1,377 @@
+{
+ "name": "MaceWindu",
+ "title": "Мейс Винду",
+ "side": "Republic",
+ "role": "jedi",
+ "style": "mace",
+ "weapon": "Saber_Mace",
+ "height": 1.88,
+ "humanoid": {
+  "Hips": "Hips",
+  "Spine": "Spine",
+  "Chest": "Chest",
+  "UpperChest": "UpperChest",
+  "Neck": "Neck",
+  "Head": "Head",
+  "Jaw": "Jaw",
+  "LeftEye": "Eye.L",
+  "RightEye": "Eye.R",
+  "LeftShoulder": "Shoulder.L",
+  "LeftUpperArm": "UpperArm.L",
+  "LeftLowerArm": "LowerArm.L",
+  "LeftHand": "Hand.L",
+  "RightShoulder": "Shoulder.R",
+  "RightUpperArm": "UpperArm.R",
+  "RightLowerArm": "LowerArm.R",
+  "RightHand": "Hand.R",
+  "LeftUpperLeg": "UpperLeg.L",
+  "LeftLowerLeg": "LowerLeg.L",
+  "LeftFoot": "Foot.L",
+  "LeftToes": "Toes.L",
+  "RightUpperLeg": "UpperLeg.R",
+  "RightLowerLeg": "LowerLeg.R",
+  "RightFoot": "Foot.R",
+  "RightToes": "Toes.R",
+  "LeftThumbProximal": "Thumb1.L",
+  "LeftThumbIntermediate": "Thumb2.L",
+  "LeftThumbDistal": "Thumb3.L",
+  "LeftIndexProximal": "Index1.L",
+  "LeftIndexIntermediate": "Index2.L",
+  "LeftIndexDistal": "Index3.L",
+  "LeftMiddleProximal": "Middle1.L",
+  "LeftMiddleIntermediate": "Middle2.L",
+  "LeftMiddleDistal": "Middle3.L",
+  "LeftRingProximal": "Ring1.L",
+  "LeftRingIntermediate": "Ring2.L",
+  "LeftRingDistal": "Ring3.L",
+  "LeftLittleProximal": "Little1.L",
+  "LeftLittleIntermediate": "Little2.L",
+  "LeftLittleDistal": "Little3.L",
+  "RightThumbProximal": "Thumb1.R",
+  "RightThumbIntermediate": "Thumb2.R",
+  "RightThumbDistal": "Thumb3.R",
+  "RightIndexProximal": "Index1.R",
+  "RightIndexIntermediate": "Index2.R",
+  "RightIndexDistal": "Index3.R",
+  "RightMiddleProximal": "Middle1.R",
+  "RightMiddleIntermediate": "Middle2.R",
+  "RightMiddleDistal": "Middle3.R",
+  "RightRingProximal": "Ring1.R",
+  "RightRingIntermediate": "Ring2.R",
+  "RightRingDistal": "Ring3.R",
+  "RightLittleProximal": "Little1.R",
+  "RightLittleIntermediate": "Little2.R",
+  "RightLittleDistal": "Little3.R"
+ },
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 90,
+   "loop": true
+  },
+  {
+   "name": "Ignite",
+   "frames": 40,
+   "loop": false
+  },
+  {
+   "name": "Walk",
+   "frames": 32,
+   "loop": true
+  },
+  {
+   "name": "WalkBack",
+   "frames": 34,
+   "loop": true
+  },
+  {
+   "name": "StrafeL",
+   "frames": 30,
+   "loop": true
+  },
+  {
+   "name": "StrafeR",
+   "frames": 30,
+   "loop": true
+  },
+  {
+   "name": "Run",
+   "frames": 20,
+   "loop": true
+  },
+  {
+   "name": "Attack1",
+   "frames": 31,
+   "loop": false
+  },
+  {
+   "name": "Attack2",
+   "frames": 33,
+   "loop": false
+  },
+  {
+   "name": "Attack3",
+   "frames": 42,
+   "loop": false
+  },
+  {
+   "name": "Attack4",
+   "frames": 34,
+   "loop": false
+  },
+  {
+   "name": "Block",
+   "frames": 34,
+   "loop": false
+  },
+  {
+   "name": "Deflect1",
+   "frames": 16,
+   "loop": false
+  },
+  {
+   "name": "Deflect2",
+   "frames": 16,
+   "loop": false
+  },
+  {
+   "name": "ForcePush",
+   "frames": 44,
+   "loop": false
+  },
+  {
+   "name": "Hit",
+   "frames": 22,
+   "loop": false
+  },
+  {
+   "name": "HitBack",
+   "frames": 22,
+   "loop": false
+  },
+  {
+   "name": "Death_Back",
+   "frames": 55,
+   "loop": false
+  },
+  {
+   "name": "Death_Forward",
+   "frames": 50,
+   "loop": false
+  },
+  {
+   "name": "Death_Knees",
+   "frames": 60,
+   "loop": false
+  },
+  {
+   "name": "Death_Spin",
+   "frames": 50,
+   "loop": false
+  },
+  {
+   "name": "Death_Headshot",
+   "frames": 45,
+   "loop": false
+  },
+  {
+   "name": "Death_Blast",
+   "frames": 50,
+   "loop": false
+  }
+ ],
+ "materials": [
+  {
+   "name": "Skin_Dark",
+   "color": [
+    0.11,
+    0.06,
+    0.04
+   ],
+   "smoothness": 0.52,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "MaceWindu_Eye",
+   "color": [
+    0.3,
+    0.2,
+    0.1
+   ],
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Jedi_Tan",
+   "color": [
+    0.3,
+    0.21,
+    0.12
+   ],
+   "smoothness": 0.15,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Jedi_Brown",
+   "color": [
+    0.09,
+    0.055,
+    0.03
+   ],
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Boot_Black",
+   "color": [
+    0.015,
+    0.015,
+    0.016
+   ],
+   "smoothness": 0.72,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Rubber_Black",
+   "color": [
+    0.025,
+    0.025,
+    0.025
+   ],
+   "smoothness": 0.25,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Leather_Mid",
+   "color": [
+    0.09,
+    0.05,
+    0.025
+   ],
+   "smoothness": 0.55,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Silver",
+   "color": [
+    0.7,
+    0.7,
+    0.72
+   ],
+   "smoothness": 0.82,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Brows_Dark",
+   "color": [
+    0.03,
+    0.02,
+    0.015
+   ],
+   "smoothness": 0.62,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Gold",
+   "color": [
+    0.85,
+    0.62,
+    0.3
+   ],
+   "smoothness": 0.8,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Black",
+   "color": [
+    0.02,
+    0.02,
+    0.022
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Blade_Purple",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "smoothness": 1.0,
+   "metallic": 0.0,
+   "emission": [
+    3.3,
+    0.3,
+    6.0
+   ],
+   "alpha": 1.0
+  }
+ ]
+}

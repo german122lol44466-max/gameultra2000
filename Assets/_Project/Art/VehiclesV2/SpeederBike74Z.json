@@ -1,0 +1,119 @@
+{
+ "side": "Empire",
+ "title": "Спидер 74-Z",
+ "kind": "speeder",
+ "health": 300,
+ "speed": 14.0,
+ "crew": "Stormtrooper",
+ "crew_clip": "Ride",
+ "name": "SpeederBike74Z",
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "Move",
+   "frames": 40,
+   "loop": true
+  },
+  {
+   "name": "Fire",
+   "frames": 10,
+   "loop": false
+  },
+  {
+   "name": "Death",
+   "frames": 45,
+   "loop": false
+  }
+ ],
+ "materials": [
+  {
+   "name": "Imperial_Grey",
+   "color": [
+    0.33,
+    0.34,
+    0.36
+   ],
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Imperial_Dark",
+   "color": [
+    0.08,
+    0.085,
+    0.09
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Engine_Glow",
+   "color": [
+    0.2,
+    0.4,
+    1.0
+   ],
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": [
+    2.4,
+    4.4,
+    8.0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Leather_Dark",
+   "color": [
+    0.03,
+    0.02,
+    0.015
+   ],
+   "smoothness": 0.58,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Viewport_Dark",
+   "color": [
+    0.01,
+    0.012,
+    0.014
+   ],
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  }
+ ],
+ "muzzles": [
+  "Muzzle.0"
+ ],
+ "stride": 0,
+ "period": 1
+}

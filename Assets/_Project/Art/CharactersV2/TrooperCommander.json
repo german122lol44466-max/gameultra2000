@@ -1,0 +1,462 @@
+{
+ "name": "TrooperCommander",
+ "title": "Командир штурмовиков",
+ "side": "Empire",
+ "role": "officer",
+ "style": "rifle",
+ "weapon": "E11",
+ "height": 1.83,
+ "humanoid": {
+  "Hips": "Hips",
+  "Spine": "Spine",
+  "Chest": "Chest",
+  "UpperChest": "UpperChest",
+  "Neck": "Neck",
+  "Head": "Head",
+  "Jaw": "Jaw",
+  "LeftEye": "Eye.L",
+  "RightEye": "Eye.R",
+  "LeftShoulder": "Shoulder.L",
+  "LeftUpperArm": "UpperArm.L",
+  "LeftLowerArm": "LowerArm.L",
+  "LeftHand": "Hand.L",
+  "RightShoulder": "Shoulder.R",
+  "RightUpperArm": "UpperArm.R",
+  "RightLowerArm": "LowerArm.R",
+  "RightHand": "Hand.R",
+  "LeftUpperLeg": "UpperLeg.L",
+  "LeftLowerLeg": "LowerLeg.L",
+  "LeftFoot": "Foot.L",
+  "LeftToes": "Toes.L",
+  "RightUpperLeg": "UpperLeg.R",
+  "RightLowerLeg": "LowerLeg.R",
+  "RightFoot": "Foot.R",
+  "RightToes": "Toes.R",
+  "LeftThumbProximal": "Thumb1.L",
+  "LeftThumbIntermediate": "Thumb2.L",
+  "LeftThumbDistal": "Thumb3.L",
+  "LeftIndexProximal": "Index1.L",
+  "LeftIndexIntermediate": "Index2.L",
+  "LeftIndexDistal": "Index3.L",
+  "LeftMiddleProximal": "Middle1.L",
+  "LeftMiddleIntermediate": "Middle2.L",
+  "LeftMiddleDistal": "Middle3.L",
+  "LeftRingProximal": "Ring1.L",
+  "LeftRingIntermediate": "Ring2.L",
+  "LeftRingDistal": "Ring3.L",
+  "LeftLittleProximal": "Little1.L",
+  "LeftLittleIntermediate": "Little2.L",
+  "LeftLittleDistal": "Little3.L",
+  "RightThumbProximal": "Thumb1.R",
+  "RightThumbIntermediate": "Thumb2.R",
+  "RightThumbDistal": "Thumb3.R",
+  "RightIndexProximal": "Index1.R",
+  "RightIndexIntermediate": "Index2.R",
+  "RightIndexDistal": "Index3.R",
+  "RightMiddleProximal": "Middle1.R",
+  "RightMiddleIntermediate": "Middle2.R",
+  "RightMiddleDistal": "Middle3.R",
+  "RightRingProximal": "Ring1.R",
+  "RightRingIntermediate": "Ring2.R",
+  "RightRingDistal": "Ring3.R",
+  "RightLittleProximal": "Little1.R",
+  "RightLittleIntermediate": "Little2.R",
+  "RightLittleDistal": "Little3.R"
+ },
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 90,
+   "loop": true
+  },
+  {
+   "name": "Walk",
+   "frames": 32,
+   "loop": true
+  },
+  {
+   "name": "WalkAim",
+   "frames": 36,
+   "loop": true
+  },
+  {
+   "name": "WalkBack",
+   "frames": 36,
+   "loop": true
+  },
+  {
+   "name": "StrafeL",
+   "frames": 32,
+   "loop": true
+  },
+  {
+   "name": "StrafeR",
+   "frames": 32,
+   "loop": true
+  },
+  {
+   "name": "Run",
+   "frames": 20,
+   "loop": true
+  },
+  {
+   "name": "Aim",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "AimIn",
+   "frames": 7,
+   "loop": false
+  },
+  {
+   "name": "Crouch",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "CrouchAim",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "Fire",
+   "frames": 9,
+   "loop": false
+  },
+  {
+   "name": "FireAuto",
+   "frames": 8,
+   "loop": true
+  },
+  {
+   "name": "Reload",
+   "frames": 62,
+   "loop": false
+  },
+  {
+   "name": "Hit",
+   "frames": 20,
+   "loop": false
+  },
+  {
+   "name": "HitBack",
+   "frames": 20,
+   "loop": false
+  },
+  {
+   "name": "Ride",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "Drive",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "Death_Back",
+   "frames": 55,
+   "loop": false
+  },
+  {
+   "name": "Death_Forward",
+   "frames": 50,
+   "loop": false
+  },
+  {
+   "name": "Death_Knees",
+   "frames": 60,
+   "loop": false
+  },
+  {
+   "name": "Death_Spin",
+   "frames": 50,
+   "loop": false
+  },
+  {
+   "name": "Death_Headshot",
+   "frames": 45,
+   "loop": false
+  },
+  {
+   "name": "Death_Blast",
+   "frames": 50,
+   "loop": false
+  }
+ ],
+ "materials": [
+  {
+   "name": "Undersuit_Black",
+   "color": [
+    0.018,
+    0.018,
+    0.02
+   ],
+   "smoothness": 0.2,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Glove_Black",
+   "color": [
+    0.02,
+    0.02,
+    0.022
+   ],
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Armor_White",
+   "color": [
+    0.82,
+    0.82,
+    0.8
+   ],
+   "smoothness": 0.78,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Rubber_Black",
+   "color": [
+    0.025,
+    0.025,
+    0.025
+   ],
+   "smoothness": 0.25,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Detail_Grey",
+   "color": [
+    0.32,
+    0.32,
+    0.33
+   ],
+   "smoothness": 0.6,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Light_Blue",
+   "color": [
+    0.05,
+    0.15,
+    0.6
+   ],
+   "smoothness": 0.7,
+   "metallic": 0.0,
+   "emission": [
+    0.3,
+    1.05,
+    3.0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Light_Red",
+   "color": [
+    0.6,
+    0.02,
+    0.02
+   ],
+   "smoothness": 0.7,
+   "metallic": 0.0,
+   "emission": [
+    4.0,
+    0.32,
+    0.2
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Light_White",
+   "color": [
+    0.8,
+    0.8,
+    0.8
+   ],
+   "smoothness": 0.7,
+   "metallic": 0.0,
+   "emission": [
+    2.0,
+    2.0,
+    2.0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Detail_BlueGrey",
+   "color": [
+    0.22,
+    0.27,
+    0.33
+   ],
+   "smoothness": 0.65,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Silver",
+   "color": [
+    0.7,
+    0.7,
+    0.72
+   ],
+   "smoothness": 0.82,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Black",
+   "color": [
+    0.02,
+    0.02,
+    0.022
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Black_Gloss",
+   "color": [
+    0.01,
+    0.01,
+    0.012
+   ],
+   "smoothness": 0.88,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Lens_Dark",
+   "color": [
+    0.004,
+    0.012,
+    0.008
+   ],
+   "smoothness": 0.96,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Grey",
+   "color": [
+    0.25,
+    0.25,
+    0.26
+   ],
+   "smoothness": 0.7,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Pauldron_Orange",
+   "color": [
+    0.75,
+    0.25,
+    0.04
+   ],
+   "smoothness": 0.65,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Metal_Gunmetal",
+   "color": [
+    0.06,
+    0.06,
+    0.065
+   ],
+   "smoothness": 0.62,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Lens_Red",
+   "color": [
+    0.3,
+    0.0,
+    0.0
+   ],
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "emission": [
+    1.0,
+    0.05,
+    0.02
+   ],
+   "alpha": 1.0
+  }
+ ]
+}

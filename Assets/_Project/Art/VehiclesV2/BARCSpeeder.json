@@ -1,0 +1,136 @@
+{
+ "side": "Republic",
+ "title": "Спидер BARC",
+ "kind": "speeder",
+ "health": 350,
+ "speed": 14.0,
+ "crew": "CloneTrooper",
+ "crew_clip": "Ride",
+ "name": "BARCSpeeder",
+ "clips": [
+  {
+   "name": "Idle",
+   "frames": 60,
+   "loop": true
+  },
+  {
+   "name": "Move",
+   "frames": 40,
+   "loop": true
+  },
+  {
+   "name": "Fire",
+   "frames": 10,
+   "loop": false
+  },
+  {
+   "name": "Death",
+   "frames": 45,
+   "loop": false
+  }
+ ],
+ "materials": [
+  {
+   "name": "Imperial_Dark",
+   "color": [
+    0.08,
+    0.085,
+    0.09
+   ],
+   "smoothness": 0.55,
+   "metallic": 1.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Republic_White",
+   "color": [
+    0.62,
+    0.62,
+    0.6
+   ],
+   "smoothness": 0.55,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Republic_Red",
+   "color": [
+    0.45,
+    0.04,
+    0.03
+   ],
+   "smoothness": 0.55,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Leather_Dark",
+   "color": [
+    0.03,
+    0.02,
+    0.015
+   ],
+   "smoothness": 0.58,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Engine_Glow",
+   "color": [
+    0.2,
+    0.4,
+    1.0
+   ],
+   "smoothness": 0.5,
+   "metallic": 0.0,
+   "emission": [
+    2.4,
+    4.4,
+    8.0
+   ],
+   "alpha": 1.0
+  },
+  {
+   "name": "Viewport_Dark",
+   "color": [
+    0.01,
+    0.012,
+    0.014
+   ],
+   "smoothness": 0.95,
+   "metallic": 0.0,
+   "emission": [
+    0,
+    0,
+    0
+   ],
+   "alpha": 1.0
+  }
+ ],
+ "muzzles": [
+  "Muzzle.0",
+  "Muzzle.1"
+ ],
+ "stride": 0,
+ "period": 1
+}

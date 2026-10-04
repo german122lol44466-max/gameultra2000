@@ -47,35 +47,81 @@ namespace SW.EditorTools
             var cm = Load<CharManifest>(CharDir + "manifest_v2.json");
             var vm = Load<VehManifest>(VehDir + "vehicles_v2.json");
             if (cm == null || vm == null) return;
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             foreach (var d in new[] { MatDir, AnimDir, PrefabDir, Root + "/Scenes" }) Directory.CreateDirectory(d);
             AssetDatabase.Refresh();
-            var mats = new Dictionary<string, Material>();
-            foreach (var c in cm.characters) MakeMaterials(c.materials, mats);
-            foreach (var v in vm.vehicles) MakeMaterials(v.materials, mats);
-            var prefabs = new Dictionary<string, GameObject>();
-            foreach (var c in cm.characters)
-            {
-                string fbx = CharDir + c.name + ".fbx";
-                if (AssetImporter.GetAtPath(fbx) == null) { Debug.LogWarning("Нет " + fbx); continue; }
-                Remap(fbx, mats);
-                prefabs[c.name] = CharacterPrefab(c, fbx, Controller(c.name, fbx, c.clips));
-            }
+            var errors = new List<string>();
             var catalog = new List<UnitEntry>();
-            foreach (var c in cm.characters)
-                if (prefabs.TryGetValue(c.name, out var p))
-                    catalog.Add(new UnitEntry { Name = c.name, Title = c.title, Team = c.side == "Empire" ? Team.Empire : Team.Republic, Prefab = p });
-            foreach (var v in vm.vehicles)
+            int nChar = 0, nVeh = 0;
+            try
             {
-                string fbx = VehDir + v.name + ".fbx";
-                if (AssetImporter.GetAtPath(fbx) == null) continue;
-                Remap(fbx, mats);
-                var vp = VehiclePrefab(v, fbx, Controller(v.name, fbx, v.clips));
-                prefabs.TryGetValue(v.crew ?? "", out var crew);
-                catalog.Add(new UnitEntry { Name = v.name, Title = v.title, Team = v.side == "Empire" ? Team.Empire : Team.Republic, Prefab = vp,
-                                            Vehicle = true, Crew = v.hidden_crew ? null : crew, CrewClip = v.crew_clip ?? "Ride" });
+                var mats = new Dictionary<string, Material>();
+                foreach (var c in cm.characters) Safe(errors, "материалы " + c.name, () => MakeMaterials(c.materials, mats));
+                foreach (var v in vm.vehicles) Safe(errors, "материалы " + v.name, () => MakeMaterials(v.materials, mats));
+                var prefabs = new Dictionary<string, GameObject>();
+                int i = 0, total = cm.characters.Length + vm.vehicles.Length;
+                foreach (var c in cm.characters)
+                {
+                    EditorUtility.DisplayProgressBar("Star Wars: полигон", c.title, i++ / (float)total);
+                    string fbx = CharDir + c.name + ".fbx";
+                    if (AssetImporter.GetAtPath(fbx) == null) { errors.Add("нет файла " + fbx); continue; }
+                    Safe(errors, c.name, () =>
+                    {
+                        CharacterImportSettings.Ensure(fbx);
+                        Remap(fbx, mats);
+                        prefabs[c.name] = CharacterPrefab(c, fbx, Controller(c.name, fbx, c.clips));
+                    });
+                }
+                foreach (var c in cm.characters)
+                    if (prefabs.TryGetValue(c.name, out var p) && p)
+                    {
+                        catalog.Add(new UnitEntry { Name = c.name, Title = c.title, Team = c.side == "Empire" ? Team.Empire : Team.Republic, Prefab = p });
+                        nChar++;
+                    }
+                foreach (var v in vm.vehicles)
+                {
+                    EditorUtility.DisplayProgressBar("Star Wars: полигон", v.title, i++ / (float)total);
+                    string fbx = VehDir + v.name + ".fbx";
+                    if (AssetImporter.GetAtPath(fbx) == null) { errors.Add("нет файла " + fbx); continue; }
+                    Safe(errors, v.name, () =>
+                    {
+                        CharacterImportSettings.Ensure(fbx);
+                        Remap(fbx, mats);
+                        var vp = VehiclePrefab(v, fbx, Controller(v.name, fbx, v.clips));
+                        prefabs.TryGetValue(v.crew ?? "", out var crew);
+                        catalog.Add(new UnitEntry { Name = v.name, Title = v.title, Team = v.side == "Empire" ? Team.Empire : Team.Republic, Prefab = vp,
+                                                    Vehicle = true, Crew = v.hidden_crew ? null : crew, CrewClip = v.crew_clip ?? "Ride" });
+                        nVeh++;
+                    });
+                }
+                EditorUtility.DisplayProgressBar("Star Wars: полигон", "сцена", 1f);
+                BuildScene(catalog);
             }
-            BuildScene(catalog);
-            Debug.Log("Полигон собран: " + ScenePath);
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                errors.Add("сцена: " + e.Message);
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
+            string msg = $"Персонажей: {nChar} из {cm.characters.Length}, техники: {nVeh} из {vm.vehicles.Length}.\n" +
+                         $"Сцена: {ScenePath} (открыта).\n\nНажмите Play и спавните отряды кнопками слева/справа.";
+            if (errors.Count > 0)
+                msg += "\n\nОшибки (подробности в Console):\n- " + string.Join("\n- ", errors.Take(12));
+            Debug.Log("Полигон: " + msg);
+            EditorUtility.DisplayDialog("Star Wars", msg, "OK");
+        }
+
+        static void Safe(List<string> errors, string what, Action a)
+        {
+            try { a(); }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Полигон] {what}: {e}");
+                errors.Add($"{what}: {e.GetType().Name}: {e.Message}");
+            }
         }
 
         static T Load<T>(string path) where T : class
@@ -138,11 +184,12 @@ namespace SW.EditorTools
             var ctrl = AnimatorController.CreateAnimatorControllerAtPath(path);
             var sm = ctrl.layers[0].stateMachine;
             var all = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<AnimationClip>().Where(a => !a.name.StartsWith("__preview__"))
-                .GroupBy(a => a.name).ToDictionary(g => g.Key, g => g.First());
+                .GroupBy(a => a.name.Substring(a.name.LastIndexOf('|') + 1)).ToDictionary(g => g.Key, g => g.First());
             int i = 0;
+            if (all.Count == 0) Debug.LogWarning($"[Полигон] в {fbx} нет анимаций — проверьте импорт (Rig: Generic, Import Animation)");
             foreach (var c in clips)
             {
-                if (!all.TryGetValue(c.name, out var clip)) continue;
+                if (!all.TryGetValue(c.name, out var clip)) { Debug.LogWarning($"[Полигон] {name}: нет клипа {c.name}"); continue; }
                 var st = sm.AddState(c.name, new Vector3(300, 50 * i++, 0));
                 st.motion = clip;
                 if (c.name == "Idle") sm.defaultState = st;
@@ -160,9 +207,12 @@ namespace SW.EditorTools
         static GameObject CharacterPrefab(Char c, string fbx, AnimatorController ctrl)
         {
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbx);
+            if (model == null) throw new Exception("FBX не загрузился: " + fbx);
             var go = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            try
+            {
             go.name = c.name;
-            var an = go.GetComponent<Animator>() ?? go.AddComponent<Animator>();
+            var an = GetOrAdd<Animator>(go);
             an.runtimeAnimatorController = ctrl;
             an.applyRootMotion = false;
             foreach (var r in go.GetComponentsInChildren<SkinnedMeshRenderer>()) r.updateWhenOffscreen = true;
@@ -211,17 +261,30 @@ namespace SW.EditorTools
                 s.Accuracy = c.role == "officer" ? 1.3f : c.side == "Republic" ? 1.15f : 1f;   // клоны точнее :)
                 s.BoltColor = c.side == "Empire" ? new Color(1f, 0.12f, 0.08f) : new Color(0.2f, 0.45f, 1f);
             }
-            var prefab = PrefabUtility.SaveAsPrefabAsset(go, $"{PrefabDir}/{c.name}.prefab");
-            Object.DestroyImmediate(go);
-            return prefab;
+            return PrefabUtility.SaveAsPrefabAsset(go, $"{PrefabDir}/{c.name}.prefab");
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);       // в сцене не остаётся «висящих» моделей даже при ошибке
+            }
+        }
+
+        static T GetOrAdd<T>(GameObject go) where T : Component
+        {
+            // без «??»: в редакторе отсутствующий компонент — это не настоящий null
+            var c = go.GetComponent<T>();
+            return c != null ? c : go.AddComponent<T>();
         }
 
         static GameObject VehiclePrefab(Veh v, string fbx, AnimatorController ctrl)
         {
             var model = AssetDatabase.LoadAssetAtPath<GameObject>(fbx);
+            if (model == null) throw new Exception("FBX не загрузился: " + fbx);
             var go = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            try
+            {
             go.name = v.name;
-            var an = go.GetComponent<Animator>() ?? go.AddComponent<Animator>();
+            var an = GetOrAdd<Animator>(go);
             an.runtimeAnimatorController = ctrl;
             foreach (var r in go.GetComponentsInChildren<SkinnedMeshRenderer>()) r.updateWhenOffscreen = true;
             bool walker = v.kind == "walker";
@@ -260,9 +323,12 @@ namespace SW.EditorTools
             va.Splash = v.name == "ATST" ? 3.5f : 0f;
             va.BoltSize = walker ? 2.2f : 1.4f;
             va.BoltColor = v.side == "Empire" ? new Color(1f, 0.15f, 0.08f) : new Color(0.25f, 0.5f, 1f);
-            var prefab = PrefabUtility.SaveAsPrefabAsset(go, $"{PrefabDir}/{v.name}.prefab");
-            Object.DestroyImmediate(go);
-            return prefab;
+            return PrefabUtility.SaveAsPrefabAsset(go, $"{PrefabDir}/{v.name}.prefab");
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+            }
         }
 
         // ------------------------------------------------------------------ сцена

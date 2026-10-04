@@ -27,7 +27,9 @@ namespace SW.Battle
             {
                 if (!additive)
                 {
-                    var sh = Shader.Find("Legacy Shaders/Particles/Additive") ?? Shader.Find("Particles/Standard Unlit") ?? Shader.Find("Sprites/Default");
+                    Shader sh = null;
+                    foreach (var n in new[] { "Legacy Shaders/Particles/Additive", "Particles/Standard Unlit", "Sprites/Default" })
+                        if (sh == null) sh = Shader.Find(n);
                     additive = new Material(sh);
                 }
                 return additive;

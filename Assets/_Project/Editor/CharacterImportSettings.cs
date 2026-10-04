@@ -44,6 +44,46 @@ namespace SW.EditorTools
             }
         }
 
+        /// <summary>
+        /// Принудительно применить настройки к уже импортированному FBX (если он импортировался, пока проект
+        /// не компилировался и этот постпроцессор не работал). Возвращает true, если файл переимпортирован.
+        /// </summary>
+        public static bool Ensure(string path)
+        {
+            var mi = AssetImporter.GetAtPath(path) as ModelImporter;
+            if (mi == null) return false;
+            bool reimported = false;
+            if (mi.animationType != ModelImporterAnimationType.Generic || !mi.importAnimation)
+            {
+                mi.animationType = ModelImporterAnimationType.Generic;
+                mi.importAnimation = true;
+                mi.SaveAndReimport();
+                reimported = true;
+            }
+            var clips = mi.clipAnimations;
+            bool bad = clips == null || clips.Length == 0;
+            if (!bad)
+                foreach (var c in clips)
+                    if (c.name.Contains("|") || c.loopTime != Looping.Contains(c.name)) { bad = true; break; }
+            if (bad)
+            {
+                clips = mi.defaultClipAnimations;
+                foreach (var c in clips)
+                {
+                    string n = c.name;
+                    int bar = n.LastIndexOf('|');
+                    if (bar >= 0) n = n.Substring(bar + 1);
+                    c.name = n;
+                    c.loopTime = Looping.Contains(n);
+                    c.loopPose = false;
+                }
+                mi.clipAnimations = clips;
+                mi.SaveAndReimport();
+                reimported = true;
+            }
+            return reimported;
+        }
+
         void OnPreprocessAnimation()
         {
             if (!IsAnimated(assetPath)) return;

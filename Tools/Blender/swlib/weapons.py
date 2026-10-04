@@ -176,6 +176,69 @@ def blade(k, bone, length, mat="blade", glow=None):
                 [(0, 0.0), (0.0, 0.032), (length * 0.98, 0.034), (length + 0.03, 0.0)], verts=16, caps=False)
 
 
+def dc15a(k, bone="Weapon.R"):
+    """DC-15A клонов: длинный ствол с кожухом, прицел, приклад, магазин снизу."""
+    B, D, G, L = "metal_dark", "metal_black", "metal_grey", "metal_silver"
+    k.box(bone, D, (0, 0.06, 0.06), (0.042, 0.24, 0.055), bevel=0.008)
+    k.cyl(bone, G, (0, 0.18, 0.065), (0, 0.64, 0.065), 0.018, verts=20)
+    for i in range(9):
+        y = 0.21 + i * 0.045
+        k.torus(bone, B, (0, y, 0.065), 0.0185, 0.004, axis=(0, 1, 0))
+        k.box(bone, D, (0.0, y + 0.02, 0.087), (0.008, 0.02, 0.006))
+    k.cyl(bone, B, (0, 0.64, 0.065), (0, 0.7, 0.065), 0.014, 0.017, verts=16)
+    k.cyl(bone, "metal_black", (0, 0.699, 0.065), (0, 0.702, 0.065), 0.01, verts=12)
+    k.box(bone, B, (0, 0.38, 0.042), (0.03, 0.22, 0.016), bevel=0.004)
+    k.cyl(bone, G, (0, -0.01, 0.11), (0, 0.16, 0.11), 0.013, verts=16)
+    k.cyl(bone, B, (0, -0.015, 0.11), (0, -0.005, 0.11), 0.016, verts=16)
+    k.cyl(bone, "lens_red", (0, -0.0155, 0.11), (0, -0.015, 0.11), 0.011, verts=16)
+    for y in (0.02, 0.12):
+        k.box(bone, B, (0, y, 0.094), (0.014, 0.012, 0.018))
+    k.box(bone, G, (0, 0.11, 0.0), (0.028, 0.06, 0.07), rot=(math.radians(8), 0, 0), bevel=0.005)
+    k.box(bone, D, (0, -0.005, 0.0), (0.03, 0.032, 0.095), rot=(math.radians(-18), 0, 0), bevel=0.006)
+    k.torus(bone, B, (0, 0.03, 0.025), 0.017, 0.0025, axis=(1, 0, 0))
+    k.box(bone, D, (0, -0.17, 0.05), (0.034, 0.22, 0.055), rot=(math.radians(3), 0, 0), bevel=0.012)
+    k.box(bone, "rubber", (0, -0.282, 0.045), (0.038, 0.016, 0.07), bevel=0.005)
+    lh = hand((0.85, 0.15, 0.45), (0, 1, 0), (-0.06, 0.32, 0.015))
+    return dict(hand=RIFLE_HAND, lhand=lh, blades=[], muzzle=Vector((0, 0.702, 0.065)))
+
+
+def saber_obiwan(k, bone="Weapon.R"):
+    """Рукоять Оби-Вана: серебро, чёрные накладки хвата, раструб эмиттера, кольцо навершия."""
+    S, B = "metal_silver", "metal_black"
+    k.lathe(bone, S, (0, -0.135, 0), (0, 0.135, 0),
+            [(0, 0.0), (0.0, 0.014), (0.015, 0.017), (0.03, 0.0165), (0.17, 0.0165), (0.2, 0.019), (0.235, 0.0175),
+             (0.25, 0.021), (0.27, 0.021), (0.27, 0.0)], verts=28)
+    for i in range(6):
+        y = -0.1 + i * 0.022
+        k.box(bone, B, (0.0, y, 0.0), (0.038, 0.012, 0.038), bevel=0.004, smooth=True)
+    k.box(bone, B, (0.0, 0.06, 0.018), (0.012, 0.03, 0.006))
+    k.cyl(bone, "btn_red", (0, 0.055, 0.02), (0, 0.055, 0.023), 0.003, verts=10)
+    k.torus(bone, S, (0, -0.135, 0), 0.01, 0.003, axis=(1, 0, 0))
+    return dict(hand=_saber_hand(-0.03), lhand=_saber_hand(-0.11), blades=[("Blade.R", Matrix.Translation((0, 0.135, 0)), 1.0)])
+
+
+def saber_mace(k, bone="Weapon.R"):
+    """Рукоять Мейса Винду: электрум (золото) и чёрные рёбра."""
+    Gd, B = "metal_gold", "metal_black"
+    k.lathe(bone, Gd, (0, -0.13, 0), (0, 0.13, 0),
+            [(0, 0.0), (0.0, 0.015), (0.02, 0.0175), (0.2, 0.0165), (0.22, 0.019), (0.26, 0.0185), (0.26, 0.0)], verts=28)
+    _ribs(k, bone, B, -0.1, 0.04, 0.0172, 8)
+    k.box(bone, B, (0.0, 0.08, 0.018), (0.01, 0.04, 0.006))
+    return dict(hand=_saber_hand(-0.03), lhand=_saber_hand(-0.11), blades=[("Blade.R", Matrix.Translation((0, 0.13, 0)), 1.0)])
+
+
+def saber_anakin(k, bone="Weapon.R"):
+    """Рукоять Энакина (ROTS): серебро, ребристый чёрный хват, «крылья» у эмиттера."""
+    S, B = "metal_silver", "metal_black"
+    k.lathe(bone, S, (0, -0.14, 0), (0, 0.14, 0),
+            [(0, 0.0), (0.0, 0.013), (0.02, 0.0165), (0.18, 0.0165), (0.2, 0.0185), (0.26, 0.0185), (0.28, 0.0195), (0.28, 0.0)], verts=28)
+    _ribs(k, bone, B, -0.11, 0.03, 0.0175, 9)
+    for sg in (1, -1):
+        k.box(bone, S, (0.02 * sg, 0.11, 0.0), (0.008, 0.035, 0.012), bevel=0.002)
+    k.box(bone, B, (0.0, 0.06, 0.019), (0.01, 0.025, 0.005))
+    return dict(hand=_saber_hand(-0.04), lhand=_saber_hand(-0.12), blades=[("Blade.R", Matrix.Translation((0, 0.14, 0)), 1.0)])
+
+
 WEAPONS = {
     "E11": e11,
     "DLT19": dlt19,
@@ -183,4 +246,8 @@ WEAPONS = {
     "Saber_Dooku": saber_dooku,
     "Saber_Sidious": saber_sidious,
     "Saber_Maul": saber_maul,
+    "DC15A": dc15a,
+    "Saber_ObiWan": saber_obiwan,
+    "Saber_Mace": saber_mace,
+    "Saber_Anakin": saber_anakin,
 }

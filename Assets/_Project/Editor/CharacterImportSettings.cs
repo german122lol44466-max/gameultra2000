@@ -11,12 +11,20 @@ namespace SW.EditorTools
     {
         public const string CharactersDir = "Assets/_Project/Art/Characters/";
         public const string WeaponsDir = "Assets/_Project/Art/Weapons/";
-        static readonly HashSet<string> Looping = new HashSet<string> { "Idle", "Walk", "Run", "Aim" };
+        public const string CharactersV2Dir = "Assets/_Project/Art/CharactersV2/";
+        public const string VehiclesV2Dir = "Assets/_Project/Art/VehiclesV2/";
+        static readonly HashSet<string> Looping = new HashSet<string>
+        {
+            "Idle", "Walk", "Run", "Aim", "WalkAim", "WalkBack", "StrafeL", "StrafeR", "Crouch", "CrouchAim", "FireAuto",
+            "Ride", "Drive", "Move"
+        };
+
+        static bool IsAnimated(string p) => p.StartsWith(CharactersDir) || p.StartsWith(CharactersV2Dir) || p.StartsWith(VehiclesV2Dir);
 
         void OnPreprocessModel()
         {
             var mi = (ModelImporter)assetImporter;
-            if (assetPath.StartsWith(CharactersDir))
+            if (IsAnimated(assetPath))
             {
                 mi.animationType = ModelImporterAnimationType.Generic;
                 mi.importAnimation = true;
@@ -38,7 +46,7 @@ namespace SW.EditorTools
 
         void OnPreprocessAnimation()
         {
-            if (!assetPath.StartsWith(CharactersDir)) return;
+            if (!IsAnimated(assetPath)) return;
             var mi = (ModelImporter)assetImporter;
             var clips = mi.defaultClipAnimations;
             foreach (var c in clips)

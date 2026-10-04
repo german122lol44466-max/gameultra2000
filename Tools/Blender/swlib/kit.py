@@ -156,16 +156,50 @@ def mat_flat(name, color, rough=0.5, metallic=0.0, emission=None, strength=0.0, 
     return m
 
 
-def mat_skin(name, color, wrinkles=0.3, rough=0.55):
+def mat_skin(name, color, wrinkles=0.3, rough=0.48, pores=0.08, redness=0.25):
+    """Кожа: подповерхностное рассеяние, поры, лёгкая неравномерность тона."""
     m = bpy.data.materials.new(name)
     nt, n, l, bsdf, coord = _nodes(m)
-    t = _noise(n, l, coord, 25.0, detail=8, rough=0.65)
+    t = _noise(n, l, coord, 18.0, detail=6, rough=0.6)
     w = _noise(n, l, coord, 22.0, detail=4, stretch=(1.5, 1.5, 5.0))
-    l.new(_mix(n, l, _range(n, l, t.outputs["Fac"], 0.35, 0.65), tuple(c * 0.85 for c in color), color), bsdf.inputs["Base Color"])
+    p = _noise(n, l, coord, 700.0, detail=2, rough=0.5)
+    red = tuple(min(1.0, c * (1.0 + redness * (1.6 if i == 0 else -0.3))) for i, c in enumerate(color))
+    base = _mix(n, l, _range(n, l, t.outputs["Fac"], 0.35, 0.7), tuple(c * 0.88 for c in color), color)
+    blot = _noise(n, l, coord, 6.0, detail=3)
+    l.new(_mix(n, l, _range(n, l, blot.outputs["Fac"], 0.5, 0.75, 0.0, 0.5), base, red), bsdf.inputs["Base Color"])
+    l.new(_range(n, l, p.outputs["Fac"], 0.3, 0.7, rough - 0.08, rough + 0.12), bsdf.inputs["Roughness"])
+    bsdf.inputs["Subsurface Weight"].default_value = 0.35
+    bsdf.inputs["Subsurface Radius"].default_value = (1.0, 0.35, 0.2)
+    bsdf.inputs["Subsurface Scale"].default_value = 0.012
+    bsdf.inputs["Specular IOR Level"].default_value = 0.45
+    add = n.new("ShaderNodeMath")
+    add.operation = "ADD"
+    mw = n.new("ShaderNodeMath")
+    mw.operation = "MULTIPLY"
+    mw.inputs[1].default_value = wrinkles
+    l.new(w.outputs["Fac"], mw.inputs[0])
+    mp = n.new("ShaderNodeMath")
+    mp.operation = "MULTIPLY"
+    mp.inputs[1].default_value = pores * 3
+    l.new(p.outputs["Fac"], mp.inputs[0])
+    l.new(mw.outputs[0], add.inputs[0])
+    l.new(mp.outputs[0], add.inputs[1])
+    _bump(n, l, bsdf, add.outputs[0], 0.12)
+    tag(m, color, rough)
+    return m
+
+
+def mat_hair(name, color, rough=0.38):
+    """Волосы: тонкие пряди (растянутый шум), блики, вариация оттенка."""
+    m = bpy.data.materials.new(name)
+    nt, n, l, bsdf, coord = _nodes(m)
+    st = _noise(n, l, coord, 4.0, detail=8, rough=0.7, stretch=(90.0, 90.0, 4.0))
+    l.new(_mix(n, l, _range(n, l, st.outputs["Fac"], 0.3, 0.7), tuple(c * 0.55 for c in color), tuple(min(1, c * 1.35) for c in color)),
+          bsdf.inputs["Base Color"])
     bsdf.inputs["Roughness"].default_value = rough
-    bsdf.inputs["Subsurface Weight"].default_value = 0.15
-    bsdf.inputs["Subsurface Radius"].default_value = (0.02, 0.008, 0.005)
-    _bump(n, l, bsdf, w.outputs["Fac"], wrinkles)
+    bsdf.inputs["Coat Weight"].default_value = 0.2
+    bsdf.inputs["Sheen Weight"].default_value = 0.4
+    _bump(n, l, bsdf, st.outputs["Fac"], 0.45)
     tag(m, color, rough)
     return m
 

@@ -26,6 +26,8 @@ namespace SW.Battle
             var go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             Destroy(go.GetComponent<Collider>());
             go.name = "Bolt";
+            Sfx.Play(thickness > 1.8f ? "cannon" : damage >= 20f || thickness > 1.2f ? "blaster_heavy" : "blaster", from,
+                     thickness > 1.8f ? 1f : 0.8f, 1f, thickness > 1.8f ? 8f : 4f, thickness > 1.8f ? 200f : 140f);
             go.transform.position = from;
             go.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
             go.transform.localScale = new Vector3(0.04f, 0.32f, 0.04f) * thickness;
@@ -133,6 +135,7 @@ namespace SW.Battle
                 });
             }
             Fx.Sparks(h.point, h.normal, Color);
+            if (SplashRadius <= 0f) Sfx.Play("impact", h.point, 0.55f, 1f, 1.5f, 40f, 2);
             Destroy(gameObject);
         }
 

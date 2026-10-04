@@ -21,6 +21,7 @@ namespace SW.Battle
         public Color BoltColor = new Color(1f, 0.15f, 0.1f);
         public float WalkClipSpeed = 2.2f; // скорость, под которую сделан клип ходьбы
         public string MoveClip = "Walk";
+        public float StepPeriod = 2.4f;    // длительность цикла ходьбы (с)
 
         Unit self;
         NavMeshAgent agent;
@@ -34,6 +35,8 @@ namespace SW.Battle
         Vector3 runPoint;
         bool dead;
         public GameObject Crew;
+        AudioSource engine;
+        float stepTimer;
 
         void Start()
         {
@@ -51,6 +54,7 @@ namespace SW.Battle
             agent.angularSpeed = Walker ? 60f : 160f;
             agent.acceleration = Walker ? 2f : 10f;
             self.Died += OnDied;
+            if (!Walker) engine = Sfx.Loop("speeder", transform, 0.6f, 4f, 80f);
         }
 
         void Play(string clip, float fade = 0.3f)
@@ -103,6 +107,17 @@ namespace SW.Battle
             float v = agent.velocity.magnitude;
             Play(v > 0.3f ? MoveClip : "Idle");
             if (anim) anim.speed = v > 0.3f && Walker ? Mathf.Clamp(v / WalkClipSpeed, 0.5f, 1.5f) : 1f;
+            if (engine) engine.pitch = 0.8f + Mathf.Clamp01(v / Mathf.Max(1f, Speed)) * 0.7f;
+            if (Walker && v > 0.3f)
+            {
+                // шаг: дважды за цикл ходьбы
+                stepTimer -= Time.deltaTime * Mathf.Clamp(v / WalkClipSpeed, 0.5f, 1.5f);
+                if (stepTimer <= 0f)
+                {
+                    stepTimer = StepPeriod * 0.5f;
+                    Sfx.Play("walker_step", transform.position, self.MaxHealth > 1000 ? 1f : 0.7f, self.MaxHealth > 1000 ? 0.8f : 1.1f, 6f, 120f);
+                }
+            }
             if (!target || target.Dead) return;
             Vector3 to = target.Center - (head ? head.position : transform.position);
             float dist = to.magnitude;
@@ -132,6 +147,7 @@ namespace SW.Battle
         void OnDied(DamageInfo d)
         {
             dead = true;
+            if (engine) Destroy(engine.gameObject);
             if (agent && agent.enabled) { if (agent.isOnNavMesh) agent.ResetPath(); agent.enabled = false; }
             if (anim) { anim.speed = 1f; anim.CrossFadeInFixedTime("Death", 0.1f, 0, 0f); }
             Fx.Explosion(transform.position + Vector3.up * (Walker ? 4f : 1f), Walker ? 6f : 4f);

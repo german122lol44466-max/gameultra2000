@@ -316,6 +316,7 @@ namespace SW.EditorTools
             va.Walker = walker;
             va.Speed = v.speed;
             va.MoveClip = walker ? "Walk" : "Move";
+            va.StepPeriod = v.period > 0 ? v.period : 2.4f;
             va.WalkClipSpeed = v.period > 0 ? v.stride * 2f / v.period : v.speed;
             va.Range = walker ? 70f : 45f;
             va.FireInterval = walker ? (v.name == "ATST" ? 0.9f : 0.6f) : 0.35f;

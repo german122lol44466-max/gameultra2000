@@ -14,6 +14,10 @@ namespace SW.Battle
         public Rigidbody Pelvis;
         public bool Active { get; private set; }
         Animator animator;
+        // страховка от «растягивания»: тело, родительское тело и исходное смещение в его системе
+        readonly List<(Rigidbody body, Rigidbody parent)> links = new List<(Rigidbody, Rigidbody)>();
+        Vector3[] linkLocal = new Vector3[0];
+        float guardUntil;
 
         enum Kind { Ball, Knee, Elbow, Neck }
 
@@ -67,8 +71,12 @@ namespace SW.Battle
                 var rb = b.gameObject.AddComponent<Rigidbody>();
                 rb.mass = p.Mass;
                 rb.isKinematic = true;
-                rb.interpolation = RigidbodyInterpolation.Interpolate;
+                rb.interpolation = RigidbodyInterpolation.None;      // пока жив, позой управляет аниматор
                 rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                rb.solverIterations = 20;
+                rb.solverVelocityIterations = 10;
+                rb.maxDepenetrationVelocity = 2f;
+                rb.maxAngularVelocity = 20f;
                 Compat.SetDamping(rb, 0.05f, 0.6f);
                 var child = p.Child != null ? Find(transform, p.Child) : null;
                 float lossy = b.lossyScale.y;
@@ -104,6 +112,12 @@ namespace SW.Battle
                 Bodies.Add(rb);
                 if (p.Bone == "Hips") Pelvis = rb;
             }
+            // части одного тела не сталкиваются между собой (иначе при включении физики их «разрывает»)
+            var cols = new List<Collider>();
+            foreach (var rb in Bodies) cols.AddRange(rb.GetComponents<Collider>());
+            for (int a = 0; a < cols.Count; a++)
+                for (int b2 = a + 1; b2 < cols.Count; b2++)
+                    Physics.IgnoreCollision(cols[a], cols[b2], true);
             Vector3 fwd = transform.forward, right = transform.right;
             foreach (var p in Parts)
             {
@@ -113,6 +127,8 @@ namespace SW.Battle
                 Vector3 d = child ? (child.position - bone.position).normalized : transform.up;
                 var j = bone.gameObject.AddComponent<CharacterJoint>();
                 j.connectedBody = map[p.Parent];
+                j.enablePreprocessing = false;
+                links.Add((map[p.Bone], map[p.Parent]));
                 if (p.Joint == Kind.Knee || p.Joint == Kind.Elbow)
                 {
                     // шарнир: ось — поперёк конечности; знак выбираем так, чтобы +угол сгибал в нужную сторону
@@ -137,15 +153,15 @@ namespace SW.Battle
                     j.swing2Limit = new SoftJointLimit { limit = p.Swing2 };
                 }
                 j.enableProjection = true;
-                j.projectionDistance = 0.04f;
-                j.projectionAngle = 10f;
+                j.projectionDistance = 0.02f;
+                j.projectionAngle = 5f;
                 float k = p.Joint == Kind.Neck ? 120f : 40f;          // шея жёстче
                 j.twistLimitSpring = new SoftJointLimitSpring { spring = k, damper = k * 0.15f };
                 j.swingLimitSpring = new SoftJointLimitSpring { spring = k, damper = k * 0.15f };
             }
         }
 
-        /// <summary>Включить физику с текущей позы. impulse — мгновенный толчок (в мире).</summary>
+        /// <summary>Включить физику с текущей позы. impulse — толчок (в мире): переводится в скорость всего тела с ограничением.</summary>
         public void Enable(Vector3 impulse, Vector3 point)
         {
             if (Active) return;
@@ -153,23 +169,55 @@ namespace SW.Battle
             if (animator) animator.enabled = false;
             var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             if (agent) agent.enabled = false;
+            Physics.SyncTransforms();          // тела стартуют ровно с последнего кадра анимации
+            linkLocal = new Vector3[links.Count];
+            for (int i = 0; i < links.Count; i++)
+                linkLocal[i] = links[i].parent.transform.InverseTransformPoint(links[i].body.transform.position);
+            float total = 0f;
+            foreach (var rb in Bodies) total += rb.mass;
+            Vector3 v = total > 0 ? impulse / total * 1.6f : Vector3.zero;
+            if (v.magnitude > 7f) v = v.normalized * 7f;                 // никаких «ракет» и разрывов
+            Rigidbody best = null;
+            float bd = float.MaxValue;
+            foreach (var rb in Bodies)
+            {
+                float d = (rb.worldCenterOfMass - point).sqrMagnitude;
+                if (d < bd) { bd = d; best = rb; }
+            }
             foreach (var rb in Bodies)
             {
                 rb.isKinematic = false;
-                Compat.SetVelocity(rb, Vector3.zero);
+                rb.interpolation = RigidbodyInterpolation.Interpolate;
+                Compat.SetVelocity(rb, rb == best ? v * 1.3f : v);
+                rb.angularVelocity = Vector3.zero;
             }
-            if (impulse.sqrMagnitude > 0.01f)
+            guardUntil = Time.time + 8f;
+            Sfx.Play("body_fall", Pelvis ? Pelvis.position : transform.position, 0.8f, 1f, 2f, 40f);
+        }
+
+        void FixedUpdate()
+        {
+            if (!Active || Time.time > guardUntil) return;
+            // если сустав всё же растянуло — возвращаем тело к родителю (кости не превращаются в «макароны»)
+            for (int i = 0; i < links.Count && i < linkLocal.Length; i++)
             {
-                Rigidbody best = Pelvis;
-                float bd = float.MaxValue;
-                foreach (var rb in Bodies)
+                var (body, parent) = links[i];
+                if (!body || !parent) continue;
+                Vector3 want = parent.transform.TransformPoint(linkLocal[i]);
+                if ((body.position - want).sqrMagnitude > 0.0025f)
                 {
-                    float d = (rb.worldCenterOfMass - point).sqrMagnitude;
-                    if (d < bd) { bd = d; best = rb; }
+                    body.position = want;
+                    Compat.SetVelocity(body, Compat.GetVelocity(parent));
                 }
-                best.AddForceAtPosition(impulse, point, ForceMode.Impulse);
-                if (Pelvis) Pelvis.AddForce(impulse * 0.5f, ForceMode.Impulse);
             }
+        }
+
+        /// <summary>Через какое-то время тела засыпают: убираем физику, оставляем позу (экономия).</summary>
+        void Update()
+        {
+            if (!Active || Time.time < guardUntil + 4f) return;
+            foreach (var rb in Bodies)
+                if (rb && !rb.isKinematic && rb.IsSleeping()) rb.isKinematic = true;
         }
     }
 }

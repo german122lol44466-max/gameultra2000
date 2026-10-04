@@ -26,6 +26,11 @@ namespace SW.Battle
         public Transform EmpireSpawn, RepublicSpawn;
         public Vector3 ArenaSize = new Vector3(240, 30, 170);
         public FlyCamera Cam;
+        [Header("Старт боя сразу при запуске")]
+        public bool StartBattle = true;
+        public bool AutoReinforce = true;
+        public string[] EmpireStart = { "Stormtrooper:5", "HeavyTrooper:1", "TrooperCommander:1", "DarthVader:1", "DarthMaul:1", "ATST:1", "SpeederBike74Z:1" };
+        public string[] RepublicStart = { "CloneTrooper:5", "CloneHeavy:1", "CloneCommander:1", "ObiWan:1", "MaceWindu:1", "ATRT:1", "BARCSpeeder:1" };
 
         public static int HumanAgent, VehicleAgent, BigVehicleAgent;
         readonly Dictionary<Team, int> kills = new Dictionary<Team, int> { { Team.Empire, 0 }, { Team.Republic, 0 } };
@@ -45,6 +50,28 @@ namespace SW.Battle
         }
 
         void OnDestroy() { Unit.All.Clear(); }
+
+        void Start()
+        {
+            autoBattle = AutoReinforce;
+            nextAuto = Time.time + 20f;
+            if (StartBattle)
+            {
+                SpawnList(EmpireStart);
+                SpawnList(RepublicStart);
+            }
+        }
+
+        void SpawnList(string[] list)
+        {
+            foreach (var item in list)
+            {
+                var parts = item.Split(':');
+                int n = parts.Length > 1 && int.TryParse(parts[1], out var k) ? k : 1;
+                foreach (var e in Catalog)
+                    if (e.Name == parts[0] && e.Prefab) { SpawnMany(e, n); break; }
+            }
+        }
 
         // ------------------------------------------------------------------ NavMesh во время игры (без пакетов)
         void BuildNavMesh()

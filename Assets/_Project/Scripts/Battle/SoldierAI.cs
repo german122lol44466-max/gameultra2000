@@ -177,13 +177,13 @@ namespace SW.Battle
             {
                 bool peek = (Time.time % 4f) > 1.6f && ammo > 0;
                 body.Crouching = !peek || cover.Low;
-                if (ammo <= 0 && !body.Busy) { body.DoAction("Reload"); ammo = Magazine; }
+                if (ammo <= 0 && !body.Busy) { body.DoAction("Reload"); ammo = Magazine; Sfx.Play("reload", transform.position + Vector3.up, 0.7f, 1f, 1.5f, 25f); }
                 if (!peek) return;
             }
             else body.Crouching = false;
             if (ammo <= 0)
             {
-                if (!body.Busy) { body.DoAction("Reload", stop: false); ammo = Magazine; }
+                if (!body.Busy) { body.DoAction("Reload", stop: false); ammo = Magazine; Sfx.Play("reload", transform.position + Vector3.up, 0.7f, 1f, 1.5f, 25f); }
                 return;
             }
             if (running || body.Busy || dist > Range) return;

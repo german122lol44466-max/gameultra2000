@@ -25,6 +25,7 @@ namespace SW.Battle
         float nextThink, nextAttack, nextForce, circleSign = 1f, lastHitCheck;
         int combo;
         bool hitThisSwing;
+        AudioSource hum;
         static readonly string[] Attacks = { "Attack1", "Attack2", "Attack3", "Attack4" };
 
         void Start()
@@ -45,6 +46,8 @@ namespace SW.Battle
                 l.shadows = LightShadows.None;
             }
             if (body.Has("Ignite")) body.DoAction("Ignite");
+            Sfx.Play("saber_on", transform.position + Vector3.up, 0.9f, 1f, 2.5f, 50f);
+            if (body.Blades.Count > 0) hum = Sfx.Loop("saber_hum", body.Blades[0], 0.35f, 1.5f, 25f);
         }
 
         Unit PickTarget()
@@ -74,6 +77,7 @@ namespace SW.Battle
             else
                 dir = Quaternion.Euler(Random.Range(-40, 40), Random.Range(-60, 60), 0) * -bolt.transform.up;
             bolt.Reflect(dir, self);
+            Sfx.Play("deflect", bolt.transform.position, 0.9f, 1f, 2f, 60f);
             if (!body.Busy) body.DoAction(Random.value < 0.5f ? "Deflect1" : "Deflect2", 0.05f, stop: false);
             body.FaceTarget = bolt.transform.position - bolt.transform.up * 5f;
             return true;
@@ -117,7 +121,12 @@ namespace SW.Battle
 
         void Update()
         {
-            if (self.Dead) return;
+            if (self.Dead)
+            {
+                if (hum) { Sfx.Play("saber_off", hum.transform.position, 0.8f); Destroy(hum.gameObject); hum = null; }
+                return;
+            }
+            if (hum) hum.pitch = body.Busy && (body.Action ?? "").StartsWith("Attack") ? 1.15f : 1f;
             if (Time.time >= nextThink)
             {
                 nextThink = Time.time + 0.3f + Random.value * 0.1f;
@@ -140,6 +149,8 @@ namespace SW.Battle
                 string a = Attacks[combo % Attacks.Length];
                 combo = Random.value < 0.75f ? combo + 1 : 0;
                 float len = body.DoAction(a, 0.06f);
+                Sfx.Play(Random.value < 0.5f ? "saber_swing1" : "saber_swing2", body.Blades.Count > 0 ? body.Blades[0].position : self.Center,
+                         0.9f, Random.Range(0.9f, 1.1f), 2f, 35f);
                 nextAttack = Time.time + len * 0.85f + (combo == 0 ? Random.Range(0.3f, 0.9f) : 0f);
                 hitThisSwing = false;
                 // противник-дуэлянт может заблокировать
@@ -203,6 +214,7 @@ namespace SW.Battle
             if (body.Has("ForcePush"))
             {
                 body.DoAction("ForcePush", 0.1f);
+                Sfx.Play("force_push", self.Center, 1f, 1f, 4f, 60f);
                 Invoke(nameof(PushNow), 0.55f);
             }
         }

@@ -98,12 +98,14 @@ namespace SW.Battle
 
         public static void SaberClash(Vector3 pos)
         {
+            Sfx.Play("saber_clash", pos, 1f, 1f, 3f, 60f);
             Burst(pos, Vector3.up, new Color(1f, 0.9f, 0.6f), 30, 7f, 0.5f, 0.05f, 1f, "Clash");
             Flash(pos, new Color(1f, 0.9f, 0.7f), 6f, 5f, 0.08f);
         }
 
         public static void Explosion(Vector3 pos, float radius)
         {
+            Sfx.Play("explosion", pos, 1f, Mathf.Lerp(1.1f, 0.8f, Mathf.InverseLerp(2f, 6f, radius)), 10f + radius * 2f, 300f);
             Burst(pos, Vector3.up, new Color(1f, 0.6f, 0.2f), 60, 9f * radius / 3f, 0.8f, 0.6f * radius / 3f, -0.1f, "Fire");
             Burst(pos, Vector3.up, new Color(0.25f, 0.23f, 0.22f), 40, 3f, 2.5f, 1.2f * radius / 3f, -0.05f, "Smoke");
             Flash(pos + Vector3.up, new Color(1f, 0.6f, 0.3f), 12f, radius * 4f, 0.25f);
@@ -132,6 +134,7 @@ namespace SW.Battle
         /// <summary>Молния Силы между точками на время t.</summary>
         public static void Lightning(Vector3 a, Vector3 b, float time)
         {
+            Sfx.Play("lightning", a, 0.9f, 1f, 4f, 60f);
             I.StartCoroutine(I.LightningCo(a, b, time));
         }
 

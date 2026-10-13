@@ -148,3 +148,10 @@ python Tools/Blender/render_showcase.py                             # общие
 Как это устроено: модели собираются из примитивов (`swlib/troopers.py`, `swlib/sith.py`, `swlib/weapons.py`).
 Анимации задаются ключевыми позами в пространстве персонажа (`swlib/anims.py`): положение оружия, стоп и корпуса.
 IK решает руки и ноги (`swlib/rig.py`), затем всё запекается в обычный FK-скелет.
+
+## Отдельная игра: «ЭХО: Кассиопея-9»
+
+Браузерная социальная детективная игра в духе Among Us со своим сюжетом — папка [`EchoCassiopeia/`](EchoCassiopeia/README.md).
+Откройте `EchoCassiopeia/index.html` в браузере.
+
+![ЭХО](EchoCassiopeia/assets/banner-wide.png)

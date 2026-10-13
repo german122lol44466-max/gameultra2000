@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ЭХО: Кассиопея-9</title>
+<meta name="description" content="Социальная детективная игра: найди Эхо-копии среди экипажа станции «Кассиопея-9».">
+<meta name="theme-color" content="#0b0d1a">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:image" content="assets/banner.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<!-- Главное меню -->
+<section id="menu" class="screen">
+  <div class="menu-box">
+    <img class="logo" src="assets/logo.png" alt="ЭХО: Кассиопея-9">
+    <div class="menu-tag">Кто из экипажа — уже не человек?</div>
+    <button id="btn-play" class="big">ИГРАТЬ</button>
+    <button id="btn-story">СЮЖЕТ</button>
+    <button id="btn-howto">КАК ИГРАТЬ</button>
+  </div>
+  <div class="ver">v1.0 · одиночная игра с ботами</div>
+</section>
+
+<!-- Сюжет -->
+<section id="story" class="screen hidden">
+  <div class="panel story-panel">
+    <h2>ПРОЛОГ</h2>
+    <div id="story-text"></div>
+    <button data-back>НАЗАД</button>
+  </div>
+</section>
+
+<!-- Как играть -->
+<section id="howto" class="screen hidden">
+  <div class="panel howto-panel">
+    <h2>КАК ИГРАТЬ</h2>
+    <div class="cols">
+      <div>
+        <h3 class="c-crew">Смотрители</h3>
+        <p>Выполняй задания по всей станции (жёлтые рамки и метки на карте). Когда общая шкала заполнится — сигнал бедствия отправлен, вы победили.</p>
+        <p>Нашёл кристаллизованное тело — сообщи (<b>R</b>). На собрании обсуждайте и голосуйте: изгоните всех Эхо, чтобы победить.</p>
+        <p><b>Биоскан</b> в медотсеке видят все — он доказывает, что ты человек.</p>
+      </div>
+      <div>
+        <h3 class="c-echo">Эхо</h3>
+        <p>Кристаллизуй смотрителей (<b>Q</b>), когда никто не видит. Прячься в вентиляции (<b>E</b>), перемещайся цифрами <b>1–2</b>.</p>
+        <p>Саботаж (<b>F</b>): свет, реактор, связь. Если реактор не починить за 45 секунд — станция взорвётся.</p>
+        <p>Эхо побеждают, когда их не меньше, чем смотрителей.</p>
+      </div>
+    </div>
+    <table class="keys">
+      <tr><td>WASD / стрелки</td><td>движение</td><td>E / Enter</td><td>действие</td></tr>
+      <tr><td>R</td><td>сообщить о теле</td><td>M / Tab</td><td>карта</td></tr>
+      <tr><td>Q</td><td>кристаллизовать (Эхо)</td><td>F</td><td>саботаж (Эхо)</td></tr>
+      <tr><td>Esc</td><td>закрыть окно</td><td>Пробел</td><td>в мини-играх</td></tr>
+    </table>
+    <p class="small">На телефоне — джойстик в левой части экрана и кнопки справа.</p>
+    <button data-back>НАЗАД</button>
+  </div>
+</section>
+
+<!-- Настройка партии -->
+<section id="setup" class="screen hidden">
+  <div class="panel setup-panel">
+    <h2>НОВАЯ ПАРТИЯ</h2>
+    <label class="row">Имя <input id="s-name" maxlength="12"></label>
+    <div class="row">Цвет скафандра</div>
+    <div id="s-colors"></div>
+    <div class="grid2">
+      <label>Ботов: <b id="v-bots"></b><input id="s-bots" type="range" min="4" max="9"></label>
+      <label>Эхо: <b id="v-echoes"></b><input id="s-echoes" type="range" min="1" max="3"></label>
+      <label>Перезарядка убийства: <b id="v-kill"></b><input id="s-kill" type="range" min="10" max="60" step="5"></label>
+      <label>Время собрания: <b id="v-discuss"></b><input id="s-discuss" type="range" min="30" max="150" step="15"></label>
+      <label>Заданий у каждого: <b id="v-tasks"></b><input id="s-tasks" type="range" min="3" max="8"></label>
+      <label>Громкость: <b id="v-volume"></b><input id="s-volume" type="range" min="0" max="100"></label>
+      <label>Роль
+        <select id="s-role"><option value="random">Случайная</option><option value="crew">Смотритель</option><option value="echo">Эхо</option></select>
+      </label>
+      <label>Сложность ботов
+        <select id="s-diff"><option value="easy">Лёгкая</option><option value="normal">Обычная</option><option value="hard">Сложная</option></select>
+      </label>
+    </div>
+    <label class="row check"><input id="s-confirm" type="checkbox"> Сообщать, был ли изгнанный Эхо</label>
+    <div class="btns"><button data-back>НАЗАД</button><button id="btn-start" class="big">НАЧАТЬ</button></div>
+  </div>
+</section>
+
+<!-- Экран роли -->
+<section id="intro" class="screen hidden">
+  <div class="intro-role" id="intro-role"></div>
+  <div class="intro-count" id="intro-count"></div>
+  <canvas id="intro-canvas" width="900" height="300"></canvas>
+  <div class="intro-text" id="intro-text"></div>
+</section>
+
+<!-- Конец -->
+<section id="end" class="screen hidden">
+  <div class="end-verdict" id="end-verdict"></div>
+  <div class="end-title" id="end-title"></div>
+  <p class="end-text" id="end-text"></p>
+  <div id="end-roles"></div>
+  <div class="btns"><button id="btn-tomenu">В МЕНЮ</button><button id="btn-again" class="big">ЕЩЁ РАЗ</button></div>
+</section>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="taskbar"><div id="taskbar-fill"></div><span id="taskbar-label"></span></div>
+  <div id="tasklist"></div>
+  <div id="room-label"></div>
+  <div id="sab-alert" class="hidden"></div>
+  <div id="vent-nav" class="hidden"></div>
+  <div id="actions">
+    <button id="btn-map" class="act small-act" title="Карта (M)"><span class="ic">🗺</span><span>КАРТА</span></button>
+    <button id="btn-sab" class="act echo-act hidden" title="Саботаж (F)"><span class="ic">⚡</span><span>САБОТАЖ</span><b id="btn-sab-cd" class="cd"></b></button>
+    <button id="btn-kill" class="act echo-act hidden" title="Кристаллизовать (Q)"><span class="ic">✦</span><span>УБИТЬ</span><b id="btn-kill-cd" class="cd"></b></button>
+    <button id="btn-report" class="act report-act" title="Сообщить (R)"><span class="ic">⚠</span><span>СООБЩИТЬ</span></button>
+    <button id="btn-use" class="act use-act" title="Действие (E)"><span class="ic">✋</span><span id="btn-use-label">ДЕЙСТВИЕ</span></button>
+  </div>
+  <div id="joy-zone"><div id="joy-base"><div id="joy-knob"></div></div></div>
+  <div id="sab-menu" class="hidden">
+    <h3>САБОТАЖ</h3>
+    <button data-sab="lights">💡 Отключить свет</button>
+    <button data-sab="reactor">☢ Перегрузить реактор</button>
+    <button data-sab="comms">📡 Заглушить связь</button>
+    <button id="sab-close">Закрыть</button>
+  </div>
+</div>
+
+<div id="minimap" class="overlay hidden"><canvas id="minimap-canvas"></canvas><div class="mm-hint">Карта станции «Кассиопея-9» — нажми M или кликни, чтобы закрыть</div></div>
+
+<!-- Мини-игра -->
+<div id="task-modal" class="overlay hidden">
+  <div class="task-win">
+    <div class="task-head"><span id="task-title"></span><button id="task-close">✖</button></div>
+    <div id="task-body"></div>
+  </div>
+</div>
+
+<!-- Собрание -->
+<div id="meeting" class="overlay hidden">
+  <div class="m-win">
+    <div class="m-head"><div><div id="m-title"></div><div id="m-sub"></div></div><div id="m-timer"></div></div>
+    <div class="m-main">
+      <div class="m-left">
+        <div id="m-grid"></div>
+        <div class="m-skip-row"><button id="m-skip">ПРОПУСТИТЬ ГОЛОС</button><div id="m-skip-dots"></div></div>
+      </div>
+      <div class="m-right">
+        <div id="m-chat"></div>
+        <div id="m-quick"></div>
+        <div class="m-input-row"><input id="m-input" maxlength="140" autocomplete="off"><button id="m-send">➤</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="splash" class="overlay hidden"><canvas id="splash-canvas" width="320" height="200"></canvas><div id="splash-text"></div></div>
+<div id="eject" class="overlay hidden"><canvas id="eject-canvas"></canvas></div>
+<div id="death" class="overlay hidden"><canvas id="death-canvas" width="520" height="260"></canvas><div id="death-text"></div></div>
+<div id="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/map.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/minigames.js"></script>
+<script src="js/game.js"></script>
+<script src="js/meeting.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "ЭХО: Кассиопея-9",
+  "short_name": "ЭХО",
+  "description": "Социальная детективная игра на космической станции",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0b0d1a",
+  "theme_color": "#0b0d1a",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,89 @@
+<!doctype html><meta charset="utf-8">
+<body style="margin:0;background:#222">
+<script src="../js/data.js"></script>
+<script src="../js/map.js"></script>
+<script src="../js/render.js"></script>
+<script>
+// Генерация иконки, логотипа и баннера из тех же функций отрисовки, что и в игре
+function crystal(g, x, y, w, h, a, glow = 1) {
+  g.save(); g.translate(x, y); g.rotate(a);
+  const gr = g.createLinearGradient(0, -h, 0, 0);
+  gr.addColorStop(0, `rgba(250,235,255,${glow})`); gr.addColorStop(0.5, '#c77dff'); gr.addColorStop(1, '#5b21b6');
+  g.fillStyle = gr; g.beginPath(); g.moveTo(-w / 2, 0); g.lineTo(-w / 4, -h * 0.8); g.lineTo(0, -h); g.lineTo(w / 4, -h * 0.8); g.lineTo(w / 2, 0); g.closePath(); g.fill();
+  g.strokeStyle = 'rgba(60,20,110,.9)'; g.lineWidth = Math.max(1, w / 14); g.stroke();
+  g.fillStyle = 'rgba(255,255,255,.45)'; g.beginPath(); g.moveTo(-w / 4, -h * 0.1); g.lineTo(-w / 8, -h * 0.75); g.lineTo(0, -h * 0.9); g.lineTo(-w / 10, -h * 0.1); g.closePath(); g.fill();
+  g.restore();
+}
+function glowBg(g, w, h, c1, c2) {
+  const gr = g.createRadialGradient(w / 2, h * 0.45, 0, w / 2, h / 2, Math.max(w, h) * 0.75);
+  gr.addColorStop(0, c1); gr.addColorStop(1, c2); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+}
+function icon(size) {
+  const c = document.createElement('canvas'); c.width = c.height = size; const g = c.getContext('2d');
+  const s = size / 512;
+  g.scale(s, s);
+  roundRect(g, 0, 0, 512, 512, 110); g.save(); g.clip();
+  glowBg(g, 512, 512, '#3b1a6b', '#07061a');
+  const st = makeStars(70, 512, 512); drawStars(g, st, 512, 512, 1.3);
+  g.fillStyle = 'rgba(199,125,255,.25)'; g.beginPath(); g.arc(256, 270, 190, 0, Math.PI * 2); g.fill();
+  drawCrew(g, 236, 470, COLORS[6], { scale: 7.2, echoEyes: true });
+  crystal(g, 380, 470, 70, 210, 0.25); crystal(g, 440, 480, 50, 140, 0.5); crystal(g, 330, 480, 40, 110, -0.1);
+  crystal(g, 90, 480, 46, 120, -0.4);
+  g.restore();
+  return c;
+}
+function logo(w, h) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  g.font = `900 ${h * 0.62}px "Segoe UI", "DejaVu Sans", Arial, sans-serif`;
+  const gr = g.createLinearGradient(0, h * 0.1, 0, h * 0.7);
+  gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.45, '#e2c6ff'); gr.addColorStop(1, '#8b3dff');
+  g.shadowColor = 'rgba(199,125,255,.9)'; g.shadowBlur = h * 0.08;
+  g.fillStyle = gr; g.fillText('ЭХО', w / 2, h * 0.66);
+  g.shadowBlur = 0;
+  g.lineWidth = h * 0.012; g.strokeStyle = '#3a0f6e'; g.strokeText('ЭХО', w / 2, h * 0.66);
+  // трещины-кристаллы
+  crystal(g, w / 2 + h * 0.62, h * 0.66, h * 0.09, h * 0.26, 0.35);
+  crystal(g, w / 2 - h * 0.66, h * 0.66, h * 0.07, h * 0.2, -0.4);
+  g.font = `700 ${h * 0.13}px "Segoe UI", "DejaVu Sans", Arial, sans-serif`;
+  g.fillStyle = '#9fd8ff'; g.shadowColor = 'rgba(89,199,255,.7)'; g.shadowBlur = h * 0.04;
+  const sub = 'К А С С И О П Е Я - 9';
+  g.fillText(sub, w / 2, h * 0.9);
+  return c;
+}
+function banner(w, h) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+  glowBg(g, w, h, '#1b1440', '#03030a');
+  const st = makeStars(500, w, h); drawStars(g, st, w, h, 2);
+  drawPlanet(g, w * 0.82, h * 0.42, h * 0.38, 3);
+  // пол станции
+  const fy = h * 0.83;
+  const fl = g.createLinearGradient(0, fy - 40, 0, h); fl.addColorStop(0, '#20263d'); fl.addColorStop(1, '#0a0c16');
+  g.fillStyle = fl; g.fillRect(0, fy - 40, w, h);
+  g.fillStyle = '#5b6b8f'; g.fillRect(0, fy - 40, w, 5);
+  const cs = [COLORS[0], COLORS[1], COLORS[3], COLORS[6], COLORS[5], COLORS[2], COLORS[7]];
+  const sc = h / 210;
+  cs.forEach((col, i) => {
+    const x = w * 0.42 + i * w * 0.075, y = fy + (i % 2) * 18;
+    drawCrew(g, x, y, col, { scale: sc * (i === 3 ? 1.15 : 1), facing: i < 3 ? 1 : -1, echoEyes: i === 3 });
+  });
+  // тело в кристаллах
+  g.save(); g.translate(w * 0.36, fy + 30); g.scale(sc * 0.9, sc * 0.9); drawBody(g, 0, 0, COLORS[4], 1); g.restore();
+  // тень-эхо за персонажем
+  g.save(); g.globalAlpha = 0.18; g.filter = 'blur(3px)';
+  drawCrew(g, w * 0.42 + 3 * w * 0.075, fy - h * 0.02, { body: '#8b3dff', dark: '#3a0f6e' }, { scale: sc * 1.9, echoEyes: true });
+  g.restore();
+  for (let k = 0; k < 9; k++) crystal(g, w * 0.08 + k * w * 0.035, fy + 10 + (k % 3) * 8, h * 0.03, h * (0.06 + (k % 4) * 0.025), (k - 4) * 0.08);
+  const L = logo(Math.round(w * 0.36), Math.round(w * 0.36 * 0.42));
+  g.drawImage(L, w * 0.03, h * 0.12);
+  g.font = `600 ${h * 0.035}px "Segoe UI", "DejaVu Sans", Arial`; g.fillStyle = '#c8d0e6'; g.textAlign = 'left';
+  g.fillText('Кто из экипажа — уже не человек?', w * 0.065, h * 0.12 + w * 0.36 * 0.42 + h * 0.06);
+  return c;
+}
+window.ASSETS = {
+  'icon-512.png': icon(512), 'icon-192.png': icon(192), 'icon-32.png': icon(32), 'icon-256.png': icon(256),
+  'logo.png': logo(1200, 500), 'banner.png': banner(1920, 1080), 'banner-wide.png': banner(1280, 640),
+};
+for (const k in ASSETS) { const im = ASSETS[k]; im.style.maxWidth = '600px'; im.title = k; document.body.appendChild(im); }
+window.exportAll = () => Object.fromEntries(Object.entries(ASSETS).map(([k, v]) => [k, v.toDataURL('image/png')]));
+</script>

@@ -5,7 +5,7 @@ using UnityEditor.SceneManagement;
 namespace SW.EditorTools
 {
     /// <summary>
-    /// «Сразу в бой»: Play всегда запускает полигон BattleArena (какая бы сцена ни была открыта),
+    /// Полигон v2 (выключено по умолчанию — игра стартует из меню «Командира клонов»): Play запускает BattleArena (какая бы сцена ни была открыта),
     /// а если полигон ещё не собран — он собирается автоматически при открытии проекта.
     /// Отключить: меню Star Wars → Play всегда с арены.
     /// </summary>
@@ -24,8 +24,9 @@ namespace SW.EditorTools
         static void Apply()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) return;
-            bool on = EditorPrefs.GetBool(Pref, true);
+            bool on = EditorPrefs.GetBool(Pref, false);       // по умолчанию Play идёт из меню «Командира клонов»
             Menu_Checked(on);
+            if (!on) { return; }
             if (!File.Exists(Scene))
             {
                 if (!SessionState.GetBool("SW_AutoBuilt", false) &&
@@ -47,7 +48,7 @@ namespace SW.EditorTools
         [MenuItem(MenuPath, priority = 30)]
         static void Toggle()
         {
-            bool on = !EditorPrefs.GetBool(Pref, true);
+            bool on = !EditorPrefs.GetBool(Pref, false);
             EditorPrefs.SetBool(Pref, on);
             Apply();
         }

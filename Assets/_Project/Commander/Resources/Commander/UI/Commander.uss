@@ -1,0 +1,233 @@
+/* «Командир клонов» — стиль интерфейса в духе Star Wars Battlefront: тонкие линии, прозрачные тёмные панели,
+   заглавные буквы с разрядкой, тёплый акцент. Шрифты — OFL (Play, Russo One). */
+
+.root {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    -unity-font-definition: url("../Fonts/Play-Regular.ttf");
+    color: rgb(222, 228, 236);
+    font-size: 16px;
+}
+
+.screen { position: absolute; left: 0; top: 0; right: 0; bottom: 0; flex-direction: column; }
+.hidden { display: none; }
+.grow { flex-grow: 1; }
+.row { flex-direction: row; align-items: center; }
+.col { flex-direction: column; }
+.center { align-items: center; justify-content: center; }
+.spacer { flex-grow: 1; }
+
+/* ---------- затемнения */
+.vignette-left {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 46%;
+    background-color: rgba(4, 7, 12, 0.72);
+    border-right-width: 1px; border-right-color: rgba(255, 255, 255, 0.06);
+}
+.shade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(3, 5, 9, 0.62); }
+.letterbox-top { position: absolute; left: 0; right: 0; top: 0; height: 64px; background-color: rgba(0, 0, 0, 0.55); }
+.letterbox-bottom { position: absolute; left: 0; right: 0; bottom: 0; height: 52px; background-color: rgba(0, 0, 0, 0.6); flex-direction: row; align-items: center; padding-left: 48px; padding-right: 48px; }
+
+/* ---------- заголовки */
+.brand-small { font-size: 15px; letter-spacing: 9px; color: rgb(255, 205, 80); -unity-font-style: bold; }
+.title { -unity-font-definition: url("../Fonts/RussoOne-Regular.ttf"); font-size: 62px; letter-spacing: 5px; color: rgb(245, 247, 250); -unity-text-align: middle-left; }
+.title-sub { font-size: 17px; letter-spacing: 10px; color: rgb(160, 175, 192); margin-top: -6px; }
+.h1 { -unity-font-definition: url("../Fonts/RussoOne-Regular.ttf"); font-size: 34px; letter-spacing: 4px; color: rgb(245, 247, 250); }
+.h2 { -unity-font-definition: url("../Fonts/Play-Bold.ttf"); font-size: 20px; letter-spacing: 4px; color: rgb(240, 242, 246); }
+.h3 { -unity-font-definition: url("../Fonts/Play-Bold.ttf"); font-size: 15px; letter-spacing: 3px; color: rgb(255, 205, 80); }
+.muted { color: rgb(150, 162, 178); }
+.small { font-size: 13px; }
+.tiny { font-size: 11px; letter-spacing: 1px; }
+.accent { color: rgb(255, 205, 80); }
+.rep { color: rgb(90, 160, 255); }
+.emp { color: rgb(255, 90, 70); }
+.good { color: rgb(110, 220, 130); }
+.bad { color: rgb(255, 110, 90); }
+.line { height: 1px; background-color: rgba(255, 255, 255, 0.16); margin-top: 10px; margin-bottom: 10px; }
+.line-accent { height: 2px; width: 64px; background-color: rgb(255, 205, 80); margin-top: 8px; margin-bottom: 18px; }
+
+/* ---------- главное меню */
+.menu-column { position: absolute; left: 7%; top: 13%; bottom: 10%; width: 36%; flex-direction: column; }
+.menu-items { margin-top: 40px; }
+.menu-item {
+    -unity-font-definition: url("../Fonts/Play-Bold.ttf");
+    font-size: 25px; letter-spacing: 5px; color: rgb(200, 208, 218);
+    padding-left: 18px; padding-top: 9px; padding-bottom: 9px; margin-bottom: 4px;
+    border-left-width: 3px; border-left-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0; border-right-width: 0; border-bottom-width: 0;
+    -unity-text-align: middle-left;
+    transition-property: translate, color, background-color, border-left-color;
+    transition-duration: 0.18s;
+}
+.menu-item:hover {
+    color: rgb(255, 255, 255);
+    border-left-color: rgb(255, 205, 80);
+    background-color: rgba(255, 255, 255, 0.06);
+    translate: 10px 0;
+}
+.menu-item:active { color: rgb(255, 205, 80); }
+.menu-item.selected { color: rgb(255, 255, 255); border-left-color: rgb(255, 205, 80); background-color: rgba(255, 205, 80, 0.10); }
+.menu-item:disabled { color: rgb(100, 108, 118); }
+.menu-hint { font-size: 13px; color: rgb(150, 162, 178); margin-left: 21px; margin-top: -2px; margin-bottom: 10px; letter-spacing: 1px; }
+
+/* ---------- панели и кнопки */
+.panel {
+    background-color: rgba(8, 12, 18, 0.86);
+    border-width: 1px; border-color: rgba(255, 255, 255, 0.12);
+    padding: 18px;
+}
+.panel-glass { background-color: rgba(10, 14, 22, 0.6); border-width: 1px; border-color: rgba(255, 255, 255, 0.08); padding: 14px; }
+.content { position: absolute; left: 7%; right: 7%; top: 11%; bottom: 12%; flex-direction: column; }
+
+.btn {
+    -unity-font-definition: url("../Fonts/Play-Bold.ttf");
+    font-size: 15px; letter-spacing: 3px; color: rgb(230, 234, 240);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-width: 1px; border-color: rgba(255, 255, 255, 0.3);
+    border-radius: 0;
+    padding: 9px 20px;
+    margin: 4px;
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.15s;
+}
+.btn:hover { background-color: rgba(255, 205, 80, 0.16); border-color: rgb(255, 205, 80); color: rgb(255, 255, 255); }
+.btn:active { background-color: rgba(255, 205, 80, 0.35); }
+.btn:disabled { color: rgb(100, 106, 114); border-color: rgba(255, 255, 255, 0.1); background-color: rgba(0, 0, 0, 0.2); }
+.btn-primary { background-color: rgb(255, 205, 80); color: rgb(18, 20, 24); border-color: rgb(255, 205, 80); }
+.btn-primary:hover { background-color: rgb(255, 222, 130); color: rgb(10, 12, 14); }
+.btn-small { font-size: 12px; padding: 5px 10px; letter-spacing: 1px; margin: 2px; }
+.btn-on { background-color: rgba(255, 205, 80, 0.28); border-color: rgb(255, 205, 80); color: rgb(255, 255, 255); }
+.btn-danger:hover { background-color: rgba(255, 80, 60, 0.25); border-color: rgb(255, 100, 80); }
+
+.tabs { flex-direction: row; border-bottom-width: 1px; border-bottom-color: rgba(255, 255, 255, 0.16); margin-bottom: 14px; }
+.tab {
+    -unity-font-definition: url("../Fonts/Play-Bold.ttf");
+    font-size: 16px; letter-spacing: 3px; color: rgb(160, 170, 184);
+    background-color: rgba(0, 0, 0, 0); border-width: 0; border-bottom-width: 2px; border-bottom-color: rgba(0, 0, 0, 0);
+    padding: 10px 18px; margin: 0;
+}
+.tab:hover { color: rgb(255, 255, 255); }
+.tab-active { color: rgb(255, 255, 255); border-bottom-color: rgb(255, 205, 80); }
+
+.list { flex-grow: 1; }
+.list-item {
+    flex-direction: row; align-items: center;
+    padding: 8px 12px; margin-bottom: 2px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0);
+}
+.list-item:hover { background-color: rgba(255, 255, 255, 0.08); }
+.list-item-selected { background-color: rgba(255, 205, 80, 0.14); border-left-color: rgb(255, 205, 80); }
+
+.field-label { font-size: 13px; letter-spacing: 2px; color: rgb(150, 162, 178); margin-top: 8px; margin-bottom: 3px; }
+.unity-text-field { margin: 0; }
+.unity-text-field__input, .unity-base-text-field__input {
+    background-color: rgba(0, 0, 0, 0.45); border-width: 1px; border-color: rgba(255, 255, 255, 0.22); border-radius: 0;
+    color: rgb(240, 242, 246); font-size: 16px; padding: 6px 8px;
+    -unity-font-definition: url("../Fonts/Play-Regular.ttf");
+}
+.unity-text-field:focus .unity-text-field__input, .unity-base-text-field:focus .unity-base-text-field__input { border-color: rgb(255, 205, 80); }
+.unity-label { color: rgb(222, 228, 236); }
+.unity-slider { margin: 0; }
+.unity-base-slider__dragger { background-color: rgb(255, 205, 80); border-width: 0; border-radius: 0; width: 10px; height: 18px; margin-top: -8px; }
+.unity-base-slider__tracker { background-color: rgba(255, 255, 255, 0.2); border-width: 0; height: 3px; margin-top: -1px; }
+.unity-toggle__checkmark { background-color: rgba(0, 0, 0, 0.45); border-color: rgba(255, 255, 255, 0.35); border-radius: 0; }
+.unity-scroller { width: 8px; }
+.unity-scroller--vertical .unity-base-slider__dragger { width: 6px; margin-left: 1px; background-color: rgba(255, 255, 255, 0.35); }
+.unity-scroll-view__content-container { flex-direction: column; }
+
+.chip { padding: 2px 8px; border-width: 1px; border-color: rgba(255, 255, 255, 0.25); font-size: 12px; letter-spacing: 1px; margin-right: 6px; }
+.chip-ready { border-color: rgb(110, 220, 130); color: rgb(110, 220, 130); }
+.chip-host { border-color: rgb(255, 205, 80); color: rgb(255, 205, 80); }
+.avatar { width: 44px; height: 44px; margin-right: 12px; background-color: rgba(255, 255, 255, 0.08); }
+
+.hint-key {
+    -unity-font-definition: url("../Fonts/Play-Bold.ttf");
+    font-size: 12px; color: rgb(18, 20, 24); background-color: rgb(225, 230, 236);
+    padding: 1px 6px; margin-right: 6px; margin-left: 14px; border-radius: 2px;
+}
+.hint-text { font-size: 13px; letter-spacing: 2px; color: rgb(200, 208, 218); }
+.status { font-size: 14px; color: rgb(255, 205, 80); letter-spacing: 1px; }
+
+/* ---------- HUD */
+.hud { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.crosshair { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.cross-line { position: absolute; background-color: rgba(255, 255, 255, 0.9); }
+.hitmarker { position: absolute; width: 18px; height: 18px; left: -9px; top: -9px; border-width: 2px; border-color: rgb(255, 255, 255); rotate: 45deg; opacity: 0; }
+.hud-bottom-left { position: absolute; left: 32px; bottom: 28px; flex-direction: column; }
+.hud-bottom-right { position: absolute; right: 32px; bottom: 28px; flex-direction: column; align-items: flex-end; }
+.hud-top { position: absolute; top: 16px; left: 0; right: 0; flex-direction: row; justify-content: center; }
+.hud-left { position: absolute; left: 24px; top: 120px; flex-direction: column; width: 270px; }
+.hud-right { position: absolute; right: 24px; top: 16px; flex-direction: column; align-items: flex-end; }
+.bar-bg { height: 6px; width: 240px; background-color: rgba(255, 255, 255, 0.15); margin-top: 4px; }
+.bar-fill { height: 6px; background-color: rgb(110, 200, 255); }
+.bar-health { background-color: rgb(235, 238, 242); }
+.ammo { -unity-font-definition: url("../Fonts/RussoOne-Regular.ttf"); font-size: 44px; color: rgb(245, 247, 250); }
+.ammo-small { font-size: 18px; color: rgb(170, 180, 194); margin-left: 6px; }
+.weapon-name { font-size: 14px; letter-spacing: 4px; color: rgb(200, 208, 218); }
+.post-chip {
+    width: 46px; height: 46px; margin: 0 5px; align-items: center; justify-content: center;
+    border-width: 2px; border-color: rgba(255, 255, 255, 0.6); background-color: rgba(0, 0, 0, 0.45);
+    rotate: 45deg;
+}
+.post-letter { -unity-font-definition: url("../Fonts/RussoOne-Regular.ttf"); font-size: 18px; rotate: -45deg; color: rgb(255, 255, 255); }
+.post-fill { position: absolute; left: 0; right: 0; bottom: 0; }
+.notice { -unity-font-definition: url("../Fonts/Play-Bold.ttf"); font-size: 20px; letter-spacing: 3px; -unity-text-align: middle-center; color: rgb(255, 255, 255); }
+.notice-box { position: absolute; top: 96px; left: 20%; right: 20%; align-items: center; }
+.squad-card {
+    flex-direction: column; padding: 6px 10px; margin-bottom: 5px;
+    background-color: rgba(6, 10, 16, 0.7); border-left-width: 4px; border-left-color: rgb(90, 160, 255);
+}
+.squad-card-selected { background-color: rgba(255, 205, 80, 0.18); }
+.squad-title { -unity-font-definition: url("../Fonts/Play-Bold.ttf"); font-size: 14px; letter-spacing: 2px; color: rgb(240, 242, 246); }
+.squad-info { font-size: 12px; color: rgb(170, 180, 194); }
+.pips { flex-direction: row; margin-top: 3px; flex-wrap: wrap; }
+.pip { width: 7px; height: 7px; margin-right: 2px; margin-bottom: 2px; background-color: rgb(110, 220, 130); }
+.pip-dead { background-color: rgba(255, 255, 255, 0.12); }
+.pip-hurt { background-color: rgb(255, 190, 70); }
+.marker { position: absolute; align-items: center; }
+.marker-icon { width: 14px; height: 14px; border-width: 2px; border-color: rgb(255, 255, 255); rotate: 45deg; }
+.marker-text { font-size: 12px; letter-spacing: 1px; -unity-text-align: middle-center; color: rgb(255, 255, 255); margin-top: 3px; }
+.damage-vignette { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-width: 60px; border-color: rgba(255, 20, 10, 0.0); }
+.chat { position: absolute; left: 24px; bottom: 140px; width: 420px; flex-direction: column; }
+.chat-line { font-size: 14px; color: rgb(230, 234, 240); -unity-text-outline-width: 1px; -unity-text-outline-color: rgba(0, 0, 0, 0.8); }
+.minimap { width: 220px; height: 220px; background-color: rgba(0, 0, 0, 0.5); border-width: 1px; border-color: rgba(255, 255, 255, 0.25); overflow: hidden; }
+.map-dot { position: absolute; width: 5px; height: 5px; }
+.map-post { position: absolute; width: 14px; height: 14px; border-width: 2px; rotate: 45deg; }
+.compass { width: 520px; height: 26px; overflow: hidden; border-bottom-width: 1px; border-bottom-color: rgba(255, 255, 255, 0.3); }
+
+/* ---------- радиальное меню */
+.radial { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.radial-item {
+    position: absolute; width: 150px; margin-left: -75px; margin-top: -16px;
+    -unity-text-align: middle-center; font-size: 14px; letter-spacing: 1px; padding: 6px 4px;
+    background-color: rgba(6, 10, 16, 0.78); border-width: 1px; border-color: rgba(255, 255, 255, 0.15); color: rgb(220, 226, 234);
+}
+.radial-item-hot { background-color: rgba(255, 205, 80, 0.85); color: rgb(15, 16, 18); border-color: rgb(255, 205, 80); }
+.radial-item-current { border-color: rgb(110, 200, 255); }
+.radial-title { position: absolute; width: 260px; margin-left: -130px; margin-top: -14px; -unity-text-align: middle-center; font-size: 15px; letter-spacing: 4px; color: rgb(255, 205, 80); }
+
+/* ---------- тактическая карта */
+.tactical-bar { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 20px; flex-direction: row; background-color: rgba(4, 7, 12, 0.85); border-top-width: 1px; border-top-color: rgba(255, 255, 255, 0.12); }
+.tactical-group { flex-direction: column; margin-right: 16px; }
+.tactical-buttons { flex-direction: row; flex-wrap: wrap; max-width: 520px; }
+.select-box { position: absolute; border-width: 1px; border-color: rgb(255, 205, 80); background-color: rgba(255, 205, 80, 0.12); }
+
+/* ---------- казарма */
+.unit-card {
+    width: 150px; margin: 5px; padding: 6px; flex-direction: column; align-items: center;
+    background-color: rgba(255, 255, 255, 0.04); border-width: 1px; border-color: rgba(255, 255, 255, 0.1);
+}
+.unit-card:hover { border-color: rgb(255, 205, 80); background-color: rgba(255, 205, 80, 0.08); }
+.unit-card-selected { border-color: rgb(255, 205, 80); background-color: rgba(255, 205, 80, 0.16); }
+.portrait { width: 120px; height: 150px; -unity-background-scale-mode: scale-to-fit; }
+.cost { font-size: 13px; color: rgb(255, 205, 80); letter-spacing: 1px; }
+.soldier-row { flex-direction: row; align-items: center; padding: 3px 8px; margin-bottom: 1px; background-color: rgba(255, 255, 255, 0.03); }
+.soldier-row:hover { background-color: rgba(255, 255, 255, 0.08); }
+.soldier-row-selected { background-color: rgba(255, 205, 80, 0.16); }
+.health-mini { width: 60px; height: 4px; background-color: rgba(255, 255, 255, 0.15); margin-left: 8px; }
+.health-mini-fill { height: 4px; background-color: rgb(110, 220, 130); }
+
+/* ---------- загрузка */
+.loading-bar-bg { width: 420px; height: 3px; background-color: rgba(255, 255, 255, 0.15); margin-top: 18px; }
+.loading-bar { height: 3px; background-color: rgb(255, 205, 80); width: 0; }
+.tip { font-size: 15px; color: rgb(190, 198, 210); max-width: 720px; -unity-text-align: middle-center; white-space: normal; margin-top: 26px; letter-spacing: 1px; }

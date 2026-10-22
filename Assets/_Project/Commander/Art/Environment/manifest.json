@@ -1,0 +1,348 @@
+{
+ "items": [
+  {
+   "name": "ImpWall",
+   "materials": [
+    "imperial_panel",
+    "imperial_light",
+    "glow_red"
+   ],
+   "size": [
+    10.2,
+    1.99,
+    4.55
+   ]
+  },
+  {
+   "name": "ImpBarrier",
+   "materials": [
+    "imperial_panel",
+    "imperial_light"
+   ],
+   "size": [
+    4.05,
+    0.87,
+    1.24
+   ]
+  },
+  {
+   "name": "ImpTower",
+   "materials": [
+    "imperial_panel",
+    "imperial_light",
+    "glow_red"
+   ],
+   "size": [
+    6.5,
+    6.5,
+    16.6
+   ]
+  },
+  {
+   "name": "ImpGate",
+   "materials": [
+    "imperial_panel",
+    "imperial_light",
+    "glow_red"
+   ],
+   "size": [
+    14.0,
+    2.7,
+    8.0
+   ]
+  },
+  {
+   "name": "ImpBunker",
+   "materials": [
+    "imperial_panel",
+    "imperial_light",
+    "glow_red"
+   ],
+   "size": [
+    11.97,
+    8.08,
+    4.6
+   ]
+  },
+  {
+   "name": "CommandCenter",
+   "materials": [
+    "imperial_panel",
+    "imperial_light",
+    "glow_red"
+   ],
+   "size": [
+    34.2,
+    24.39,
+    29.0
+   ]
+  },
+  {
+   "name": "ShieldGenerator",
+   "materials": [
+    "imperial_panel",
+    "imperial_light",
+    "glow_blue"
+   ],
+   "size": [
+    10.0,
+    10.0,
+    11.76
+   ]
+  },
+  {
+   "name": "TurretPlatform",
+   "materials": [
+    "imperial_panel"
+   ],
+   "size": [
+    4.58,
+    4.64,
+    1.2
+   ]
+  },
+  {
+   "name": "ImpPost",
+   "materials": [
+    "imperial_light",
+    "imperial_panel",
+    "glow_white"
+   ],
+   "size": [
+    6.38,
+    6.38,
+    6.3
+   ]
+  },
+  {
+   "name": "RepBarricade",
+   "materials": [
+    "republic_panel"
+   ],
+   "size": [
+    4.47,
+    1.12,
+    1.3
+   ]
+  },
+  {
+   "name": "RepBunker",
+   "materials": [
+    "republic_panel",
+    "duracrete",
+    "glow_blue"
+   ],
+   "size": [
+    8.0,
+    6.25,
+    6.3
+   ]
+  },
+  {
+   "name": "LandingPad",
+   "materials": [
+    "duracrete",
+    "glow_blue",
+    "glow_white"
+   ],
+   "size": [
+    20.78,
+    24.0,
+    0.75
+   ]
+  },
+  {
+   "name": "RepPost",
+   "materials": [
+    "republic_panel",
+    "duracrete",
+    "glow_white"
+   ],
+   "size": [
+    6.0,
+    6.0,
+    6.3
+   ]
+  },
+  {
+   "name": "Crate",
+   "materials": [
+    "imperial_light"
+   ],
+   "size": [
+    1.3,
+    1.3,
+    1.2
+   ]
+  },
+  {
+   "name": "Container",
+   "materials": [
+    "imperial_panel",
+    "imperial_light"
+   ],
+   "size": [
+    6.05,
+    2.5,
+    2.7
+   ]
+  },
+  {
+   "name": "Ruin",
+   "materials": [
+    "duracrete"
+   ],
+   "size": [
+    9.96,
+    2.21,
+    2.78
+   ]
+  },
+  {
+   "name": "Pine0",
+   "materials": [
+    "bark",
+    "leaves"
+   ],
+   "size": [
+    6.58,
+    6.48,
+    12.63
+   ]
+  },
+  {
+   "name": "Tree0",
+   "materials": [
+    "bark",
+    "leaves"
+   ],
+   "size": [
+    6.55,
+    5.09,
+    10.35
+   ]
+  },
+  {
+   "name": "Pine1",
+   "materials": [
+    "bark",
+    "leaves"
+   ],
+   "size": [
+    6.79,
+    6.69,
+    11.9
+   ]
+  },
+  {
+   "name": "Tree1",
+   "materials": [
+    "bark",
+    "leaves"
+   ],
+   "size": [
+    6.75,
+    6.34,
+    7.59
+   ]
+  },
+  {
+   "name": "Pine2",
+   "materials": [
+    "bark",
+    "leaves"
+   ],
+   "size": [
+    6.94,
+    6.84,
+    12.04
+   ]
+  },
+  {
+   "name": "Tree2",
+   "materials": [
+    "bark",
+    "leaves"
+   ],
+   "size": [
+    6.13,
+    5.35,
+    10.23
+   ]
+  },
+  {
+   "name": "Rock0",
+   "materials": [
+    "rock"
+   ],
+   "size": [
+    2.67,
+    2.24,
+    1.35
+   ]
+  },
+  {
+   "name": "Rock1",
+   "materials": [
+    "rock"
+   ],
+   "size": [
+    2.82,
+    2.05,
+    0.86
+   ]
+  },
+  {
+   "name": "Rock2",
+   "materials": [
+    "rock"
+   ],
+   "size": [
+    2.27,
+    2.45,
+    1.2
+   ]
+  },
+  {
+   "name": "Rock3",
+   "materials": [
+    "rock"
+   ],
+   "size": [
+    2.54,
+    2.28,
+    0.94
+   ]
+  }
+ ],
+ "textures": {
+  "imperial_panel": [
+   "imperial_panel.png",
+   "imperial_panel_n.png"
+  ],
+  "imperial_light": [
+   "imperial_light.png",
+   "imperial_panel_n.png"
+  ],
+  "duracrete": [
+   "duracrete.png",
+   "duracrete_n.png"
+  ],
+  "republic_panel": [
+   "republic_panel.png",
+   "republic_panel_n.png"
+  ],
+  "bark": [
+   "bark.png",
+   "bark_n.png"
+  ],
+  "leaves": [
+   "leaves.png",
+   null
+  ],
+  "rock": [
+   "ground_rock.png",
+   "ground_rock_n.png"
+  ]
+ }
+}

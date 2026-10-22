@@ -17,7 +17,7 @@ namespace SW.Commander.UI
         public static bool PointerOverUi { get; private set; }
         public static BattleHud I { get; private set; }
 
-        VisualElement root, hud, crosshair, hitmarker, squadsPanel, postsBar, noticeBox, chatBox, markers, minimap, radial, tacticalBar, selectBox, vignette, hints;
+        VisualElement root, hud, crosshair, hitmarker, squadsPanel, postsBar, noticeBox, chatBox, markers, minimap, radial, tacticalBar, selectBox, vignette, hints, rtsHints;
         Label ammo, ammoMax, weaponName, grenades, healthText, reqText, unitsText, ticketsText, objectiveText;
         VisualElement healthFill;
         readonly VisualElement[] cross = new VisualElement[4];
@@ -130,6 +130,19 @@ namespace SW.Commander.UI
             radial.pickingMode = PickingMode.Ignore;
             selectBox = Ui.Box(hud, "select-box");
             Ui.Show(selectBox, false);
+            rtsHints = Ui.Box(hud, "letterbox-bottom");
+            rtsHints.style.backgroundColor = new Color(0, 0, 0, 0);
+            rtsHints.style.justifyContent = Justify.Center;
+            rtsHints.style.bottom = 118;
+            rtsHints.pickingMode = PickingMode.Ignore;
+            Ui.Hint(rtsHints, "WASD / КРАЙ", "КАМЕРА");
+            Ui.Hint(rtsHints, "КОЛЕСО", "ЗУМ");
+            Ui.Hint(rtsHints, "Q/E", "ПОВОРОТ");
+            Ui.Hint(rtsHints, "ЛКМ", "ВЫБРАТЬ");
+            Ui.Hint(rtsHints, "ПКМ", "ПРИКАЗ (ТЯНУТЬ — СТРОЙ)");
+            Ui.Hint(rtsHints, "ПРОБЕЛ", "К ОТРЯДУ");
+            Ui.Hint(rtsHints, "B", "КАЗАРМА");
+            Ui.Hint(rtsHints, "TAB", "ВСЕЛИТЬСЯ В КОМАНДИРА");
             tacticalBar = Ui.Box(hud, "tactical-bar");
             Ui.Show(tacticalBar, false);
             hints = Ui.Box(hud, "letterbox-bottom");
@@ -182,7 +195,13 @@ namespace SW.Commander.UI
             bool screenOpen = AnyScreenOpen;
             if (!screenOpen && !Keys.Typing)
             {
-                if (Keys.Down(KeyCode.Tab) && TacticalView.I && B.LocalCommander && !B.LocalCommander.Dead) TacticalView.I.Toggle();
+                if (Keys.Down(KeyCode.Tab) && TacticalView.I)
+                {
+                    bool alive = B.LocalCommander && !B.LocalCommander.Dead;
+                    if (!TacticalView.I.Active) TacticalView.I.Enter();
+                    else if (alive) TacticalView.I.Exit();
+                    else ShowDeploy();                                   // командир погиб — сначала высадка
+                }
                 if (Keys.Down(KeyCode.Return) && NetSession.Instance && NetSession.Instance.Online) OpenChat();
             }
         }
@@ -218,6 +237,7 @@ namespace SW.Commander.UI
             reqText.text = $"СНАБЖЕНИЕ {B.Requisition}";
             unitsText.text = $"БОЙЦОВ {B.UnitCount}/{B.UnitCap}";
             Ui.Show(hints, Prefs.Hints && alive && !tactical && !AnyScreenOpen);
+            Ui.Show(rtsHints, Prefs.Hints && tactical && !AnyScreenOpen);
         }
 
         public void HitConfirmed() => hitAt = Time.time;

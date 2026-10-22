@@ -75,6 +75,43 @@ namespace SW.Commander
             Session.PlayerJoinedMatch += OnPlayerJoined;
             Session.PlayerLeft += OnPlayerLeft;
             Session.Disconnected += OnDisconnected;
+            if (Session.IsServer && !NavMeshReady()) StartCoroutine(BuildNavMeshThenLoad());
+            else Session.NotifyLoaded();
+        }
+
+        public static bool NavMeshReady()
+        {
+            Vector3 p = MapInfo.I && MapInfo.I.RepublicBase ? MapInfo.I.RepublicBase.transform.position : Vector3.zero;
+            return UnityEngine.AI.NavMesh.SamplePosition(p, out _, 30f, UnityEngine.AI.NavMesh.AllAreas);
+        }
+
+        public static string NavStatus = "";
+
+        /// <summary>Запасной вариант: NavMesh не запёкся в редакторе — строим его при загрузке боя (только хост).</summary>
+        System.Collections.IEnumerator BuildNavMeshThenLoad()
+        {
+            NavStatus = "Строим навигацию карты (один раз, ~20–60 с)...";
+            Debug.LogWarning("[Командир] запечённого NavMesh нет — строим во время загрузки");
+            var size = MapInfo.I ? MapInfo.I.Size : new Vector2(1500, 1500);
+            var bounds = new Bounds(new Vector3(0, 80, 0), new Vector3(size.x, 200, size.y));
+            var sources = new List<UnityEngine.AI.NavMeshBuildSource>();
+            UnityEngine.AI.NavMeshBuilder.CollectSources(bounds, ~0, UnityEngine.AI.NavMeshCollectGeometry.PhysicsColliders, 0,
+                new List<UnityEngine.AI.NavMeshBuildMarkup>(), sources);
+            var st = UnityEngine.AI.NavMesh.GetSettingsByID(0);
+            st.agentRadius = 0.4f;
+            st.agentClimb = 0.6f;
+            st.agentSlope = 40f;
+            st.overrideVoxelSize = true;
+            st.voxelSize = 0.3f;
+            var data = new UnityEngine.AI.NavMeshData(0);
+            UnityEngine.AI.NavMesh.AddNavMeshData(data);
+            var op = UnityEngine.AI.NavMeshBuilder.UpdateNavMeshDataAsync(data, st, sources, bounds);
+            while (!op.isDone)
+            {
+                NavStatus = $"Строим навигацию карты: {Mathf.RoundToInt(op.progress * 100)}%";
+                yield return null;
+            }
+            NavStatus = NavMeshReady() ? "" : "NavMesh не построился — бойцы будут ходить напрямую";
             Session.NotifyLoaded();
         }
 

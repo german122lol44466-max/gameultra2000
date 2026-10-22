@@ -6,9 +6,11 @@ using UnityEngine;
 namespace SW.Commander
 {
     /// <summary>
-    /// Тактическая карта (Tab): вид сверху как в RTS. ЛКМ — выбрать отряд (рамкой — несколько, Shift — добавить),
-    /// ПКМ — выдвинуться (протянуть — задать направление строя), ПКМ по врагу — атака, по командному пункту — захват,
-    /// Ctrl+ПКМ — оборонять. WASD — сдвиг, колесо — высота, Q/E или средняя кнопка — поворот.
+    /// Основная камера игры — RTS: WASD или мышь у края экрана — сдвиг, колесо — приближение (от 12 до 320 м,
+    /// вблизи камера опускается к горизонту), Q/E или средняя кнопка — поворот, Пробел — к выбранным отрядам,
+    /// Home — к командиру. ЛКМ — выбрать отряд (рамкой — несколько, Shift — добавить), ПКМ — выдвинуться
+    /// (протянуть — направление строя), ПКМ по врагу — атака, по командному пункту — захват, Ctrl+ПКМ — оборона.
+    /// Tab — вселиться в командира (вид от третьего лица) и обратно.
     /// </summary>
     public class TacticalView : MonoBehaviour
     {
@@ -25,7 +27,19 @@ namespace SW.Commander
         LineRenderer arrow;
         CommanderCamera.Mode prevMode;
 
+        bool autoEntered;
+        float wantHeight = 70f;
+        /// <summary>Точка земли под курсором (для приказов с клавиатуры).</summary>
+        public Vector3 CursorPoint { get; private set; }
+        public bool CursorValid { get; private set; }
+
         void Awake() => I = this;
+
+        public void FocusOn(Vector3 p)
+        {
+            var cam = CommanderCamera.I;
+            if (cam) cam.TacticalFocus = new Vector3(p.x, cam.TacticalFocus.y, p.z);
+        }
 
         public void Toggle()
         {
@@ -39,8 +53,14 @@ namespace SW.Commander
             prevMode = cam.Current == CommanderCamera.Mode.Tactical ? CommanderCamera.Mode.Follow : cam.Current;
             var b = BattleNet.I;
             Vector3 focus = b && b.LocalCommander ? b.LocalCommander.transform.position : Vector3.zero;
+            // на старте — над своей армией
+            var mine = b ? b.MySquads.Where(s => s.Members.Count > 0).ToList() : new List<Squad>();
+            if (!autoEntered && mine.Count > 0) focus = mine.Aggregate(Vector3.zero, (a, s) => a + s.Center) / mine.Count;
             cam.TacticalFocus = focus;
-            cam.TacticalYaw = cam.Yaw;
+            cam.TacticalYaw = b && b.LocalTeam == Team.Empire ? 180f : 0f;
+            if (autoEntered) cam.TacticalYaw = cam.Yaw;
+            else if (b) b.ShowNotice("ЛКМ — выбрать отряд · ПКМ — отдать приказ (протяните — задать направление строя)", new Color(0.85f, 0.9f, 1f));
+            autoEntered = true;
             cam.Current = CommanderCamera.Mode.Tactical;
             CommanderController.Blocked = true;
             Cursor.lockState = CursorLockMode.None;
@@ -52,7 +72,8 @@ namespace SW.Commander
             Active = false;
             var cam = CommanderCamera.Ensure();
             var b = BattleNet.I;
-            cam.Current = b && b.LocalCommander && !b.LocalCommander.Dead ? CommanderCamera.Mode.Follow : prevMode;
+            cam.Current = prevMode;
+            if (b && b.LocalCommander && !b.LocalCommander.Dead) cam.FollowNow();
             CommanderController.Blocked = false;
             dragging = rmbDown = false;
             if (arrow) arrow.enabled = false;
@@ -60,16 +81,39 @@ namespace SW.Commander
 
         void Update()
         {
+            // RTS — основной режим: включаем, как только появился свой командир
+            var bn = BattleNet.I;
+            if (!autoEntered && !Active && bn && bn.LocalCommander && Net.NetSession.Instance && Net.NetSession.Instance.Phase == Net.SessionPhase.InGame)
+            {
+                Enter();
+                wantHeight = 70f;
+            }
             if (!Active) return;
             var cam = CommanderCamera.I;
             if (!cam) return;
             float dt = Time.unscaledDeltaTime;
-            // камера
-            var mv = new Vector2((Keys.Raw(KeyCode.D) ? 1 : 0) - (Keys.Raw(KeyCode.A) ? 1 : 0), (Keys.Raw(KeyCode.W) ? 1 : 0) - (Keys.Raw(KeyCode.S) ? 1 : 0));
+            // камера: клавиши и край экрана
+            var mv = new Vector2((Keys.Raw(KeyCode.D) || Keys.Raw(KeyCode.RightArrow) ? 1 : 0) - (Keys.Raw(KeyCode.A) || Keys.Raw(KeyCode.LeftArrow) ? 1 : 0),
+                                 (Keys.Raw(KeyCode.W) || Keys.Raw(KeyCode.UpArrow) ? 1 : 0) - (Keys.Raw(KeyCode.S) || Keys.Raw(KeyCode.DownArrow) ? 1 : 0));
             if (Keys.Typing) mv = Vector2.zero;
+            Vector2 mpos = Keys.MousePosition;
+            const float edge = 10f;
+            bool inside = mpos.x >= 0 && mpos.y >= 0 && mpos.x <= Screen.width && mpos.y <= Screen.height && Application.isFocused;
+            if (inside && !dragging && !rmbDown && !UI.BattleHud.PointerOverUi)
+            {
+                if (mpos.x < edge) mv.x -= 1; else if (mpos.x > Screen.width - edge) mv.x += 1;
+                if (mpos.y < edge) mv.y -= 1; else if (mpos.y > Screen.height - edge) mv.y += 1;
+            }
+            mv = Vector2.ClampMagnitude(mv, 1f);
             var rot = Quaternion.Euler(0, cam.TacticalYaw, 0);
-            float speed = Mathf.Lerp(30f, 260f, Mathf.InverseLerp(25f, 300f, cam.TacticalHeight)) * (Keys.Shift ? 2.2f : 1f);
+            float speed = Mathf.Lerp(14f, 260f, Mathf.InverseLerp(12f, 300f, cam.TacticalHeight)) * (Keys.Shift ? 2.2f : 1f);
             cam.TacticalFocus += rot * new Vector3(mv.x, 0, mv.y) * speed * dt;
+            if (Keys.Down(KeyCode.Space) && !Keys.Typing)
+            {
+                var sel = CommandInput.I ? CommandInput.I.SelectedSquads.Where(s => s.Members.Count > 0).ToList() : new List<Squad>();
+                if (sel.Count > 0) FocusOn(sel.Aggregate(Vector3.zero, (a, s) => a + s.Center) / sel.Count);
+            }
+            if (Keys.Down(KeyCode.Home) && bn && bn.LocalCommander) FocusOn(bn.LocalCommander.transform.position);
             var map = MapInfo.I;
             if (map)
             {
@@ -77,7 +121,8 @@ namespace SW.Commander
                 cam.TacticalFocus.x = Mathf.Clamp(cam.TacticalFocus.x, r.xMin, r.xMax);
                 cam.TacticalFocus.z = Mathf.Clamp(cam.TacticalFocus.z, r.yMin, r.yMax);
             }
-            cam.TacticalHeight = Mathf.Clamp(cam.TacticalHeight * (1f - Keys.Scroll * 0.12f), 25f, 320f);
+            if (!UI.BattleHud.PointerOverUi) wantHeight = Mathf.Clamp(wantHeight * (1f - Keys.Scroll * 0.15f), 12f, 320f);
+            cam.TacticalHeight = Mathf.Lerp(cam.TacticalHeight, wantHeight, 1f - Mathf.Exp(-dt * 10f));
             if (!Keys.Typing)
             {
                 if (Keys.Raw(KeyCode.Q)) cam.TacticalYaw -= 70f * dt;
@@ -85,8 +130,10 @@ namespace SW.Commander
             }
             if (Keys.Mouse(2)) cam.TacticalYaw += Keys.Look.x * 1.5f;
 
-            if (UI.BattleHud.PointerOverUi) return;
             Vector2 mp = Keys.MousePosition;
+            CursorValid = Ground(mp, out var cpnt);
+            if (CursorValid) CursorPoint = cpnt;
+            if (UI.BattleHud.PointerOverUi) return;
             // выбор
             if (Keys.MouseDown(0)) { dragFrom = mp; dragging = true; }
             if (dragging)

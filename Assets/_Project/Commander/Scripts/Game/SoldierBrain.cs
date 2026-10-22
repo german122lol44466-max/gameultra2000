@@ -200,7 +200,16 @@ namespace SW.Commander
         void Goal(Vector3 p)
         {
             var ag = self.Agent;
-            if (!ag || !ag.enabled || !ag.isOnNavMesh) return;
+            if (!ag || !ag.enabled) return;
+            if (!ag.isOnNavMesh && !self.SnapToNavMesh())
+            {
+                // NavMesh нет — идём напрямую (запасной вариант, чтобы армия не стояла)
+                moveGoal = p;
+                hasGoal = true;
+                direct = true;
+                return;
+            }
+            direct = false;
             if (hasGoal && (p - moveGoal).sqrMagnitude < 0.25f) return;
             moveGoal = p;
             hasGoal = true;
@@ -208,9 +217,25 @@ namespace SW.Commander
             if (NavMesh.SamplePosition(p, out var h, 3f, NavMesh.AllAreas)) ag.SetDestination(h.position);
         }
 
+        bool direct;
+
+        void DirectMove()
+        {
+            if (!direct || !hasGoal) return;
+            Vector3 d = moveGoal - transform.position;
+            d.y = 0;
+            float dist = d.magnitude;
+            if (dist < 0.4f) return;
+            float sp = self.Agent ? self.Agent.speed : 1.5f;
+            Vector3 p = transform.position + d / dist * Mathf.Min(dist, sp * Time.deltaTime);
+            p.y = MapInfo.GroundHeight(p);
+            transform.position = p;
+        }
+
         void Update()
         {
             if (self.Dead) return;
+            DirectMove();
             if (Time.time >= nextThink)
             {
                 nextThink = Time.time + 0.3f + Random.value * 0.15f;

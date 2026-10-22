@@ -53,6 +53,7 @@ namespace SW.Commander
         public void Follow(CommanderController c)
         {
             target = c;
+            if (Current == Mode.Tactical) return;              // в RTS-режиме камера остаётся над полем
             Current = Mode.Follow;
             Yaw = c.transform.eulerAngles.y;
             Pitch = 8f;
@@ -81,6 +82,14 @@ namespace SW.Commander
                 case Mode.Overview: OverviewCam(dt); break;
             }
             if (shake > 0.001f) transform.position += Random.insideUnitSphere * shake * 0.3f;
+        }
+
+        public void FollowNow()
+        {
+            if (!target) return;
+            Current = Mode.Follow;
+            Yaw = target.transform.eulerAngles.y;
+            smoothPivot = target.transform.position + Vector3.up * 1.6f;
         }
 
         void FollowCam(float dt)
@@ -129,9 +138,13 @@ namespace SW.Commander
         void TacticalCam(float dt)
         {
             float ground = MapInfo.GroundHeight(TacticalFocus);
-            TacticalFocus.y = ground;
-            var rot = Quaternion.Euler(58f, TacticalYaw, 0);
+            TacticalFocus.y = Mathf.Lerp(TacticalFocus.y, ground, 1f - Mathf.Exp(-dt * 6f));
+            // вблизи — к горизонту (видно бойцов в строю), издалека — почти сверху
+            float pitch = Mathf.Lerp(30f, 62f, Mathf.InverseLerp(12f, 160f, TacticalHeight));
+            var rot = Quaternion.Euler(pitch, TacticalYaw, 0);
             Vector3 want = TacticalFocus - rot * Vector3.forward * TacticalHeight;
+            float g = MapInfo.GroundHeight(want);
+            if (want.y < g + 2.5f) want.y = g + 2.5f;                  // камера не уходит под холм
             transform.position = Vector3.Lerp(transform.position, want, 1f - Mathf.Exp(-dt * 8f));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1f - Mathf.Exp(-dt * 8f));
             Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, 50f, dt * 6f);

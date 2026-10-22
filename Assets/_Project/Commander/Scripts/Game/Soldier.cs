@@ -90,7 +90,18 @@ namespace SW.Commander
                 anim.cullingMode = auth == Authority.Server ? AnimatorCullingMode.CullUpdateTransforms : AnimatorCullingMode.CullUpdateTransforms;
             }
             if (Type != null)
-                for (int i = 0; i < Type.ClipNames.Length && i < Type.ClipLengths.Length; i++) clipLen[Type.ClipNames[i]] = Type.ClipLengths[i];
+                for (int i = 0; i < Type.ClipNames.Length && i < Type.ClipLengths.Length; i++)
+                {
+                    // только клипы, которые реально есть в контроллере (иначе CrossFade молча не играет)
+                    if (anim && anim.runtimeAnimatorController && !anim.HasState(0, Animator.StringToHash(Type.ClipNames[i]))) continue;
+                    clipLen[Type.ClipNames[i]] = Type.ClipLengths[i];
+                }
+            if (anim && !anim.runtimeAnimatorController) Debug.LogError($"[Командир] у {name} нет контроллера анимаций — пересоберите: Star Wars → Командир клонов → Собрать игру");
+            else if (clipLen.Count == 0 && !warnedClips)
+            {
+                warnedClips = true;
+                Debug.LogError($"[Командир] у {name} в контроллере нет клипов — модель импортировалась без анимаций. Пересоберите: Star Wars → Командир клонов → Собрать игру");
+            }
             foreach (var t in GetComponentsInChildren<Transform>(true))
             {
                 switch (t.name)
@@ -114,6 +125,7 @@ namespace SW.Commander
                     Agent.autoBraking = true;
                     Agent.speed = Gaits.Speed(Gait.Walk) * (Type?.SpeedMul ?? 1f);
                     Agent.avoidancePriority = Random.Range(30, 70);
+                    SnapToNavMesh();
                 }
             }
             Body = GetComponent<Ragdoll>();
@@ -128,6 +140,17 @@ namespace SW.Commander
             base.OnDisable();
             Living.Remove(this);
             if (ById.TryGetValue(NetId, out var s) && s == this) ById.Remove(NetId);
+        }
+
+        static bool warnedClips;
+
+        /// <summary>Поставить агента на NavMesh (если спавн чуть мимо сетки). false — сетки рядом нет.</summary>
+        public bool SnapToNavMesh()
+        {
+            if (!Agent || !Agent.enabled) return false;
+            if (Agent.isOnNavMesh) return true;
+            if (NavMesh.SamplePosition(transform.position, out var h, 25f, NavMesh.AllAreas)) return Agent.Warp(h.position);
+            return false;
         }
 
         // ------------------------------------------------------------------ анимации
@@ -214,8 +237,9 @@ namespace SW.Commander
             if (Dead) { UpdateDeath(); return; }
             float dt = Mathf.Max(Time.deltaTime, 1e-4f);
             if (Auth == Authority.Puppet) Interpolate();
+            UpdateCulling();
             Vector3 p = transform.position;
-            Vector3 v = Auth == Authority.Server && Agent && Agent.enabled ? Agent.velocity : (p - lastPos) / dt;
+            Vector3 v = Auth == Authority.Server && Agent && Agent.enabled && Agent.isOnNavMesh ? Agent.velocity : (p - lastPos) / dt;
             v.y = 0;
             Velocity = Vector3.Lerp(Velocity, v, 1f - Mathf.Exp(-dt * 12f));
             lastPos = p;
@@ -237,6 +261,19 @@ namespace SW.Commander
                 string clip = current ?? "Idle";
                 anim.speed = speed < 0.2f || Busy ? 1f : Mathf.Clamp(speed / Gaits.ClipSpeed(clip), 0.6f, 1.7f);
             }
+        }
+
+        float cullAt;
+
+        /// <summary>Вблизи камеры — анимация всегда (неточные границы меша не «замораживают» бойца), вдали — экономим.</summary>
+        void UpdateCulling()
+        {
+            if (!anim || Time.time < cullAt) return;
+            cullAt = Time.time + 0.5f + Random.value * 0.2f;
+            var cam = Camera.main;
+            bool near = cam && (cam.transform.position - transform.position).sqrMagnitude < 150f * 150f;
+            var mode = near || Auth == Authority.Owner ? AnimatorCullingMode.AlwaysAnimate : AnimatorCullingMode.CullUpdateTransforms;
+            if (anim.cullingMode != mode) anim.cullingMode = mode;
         }
 
         // ------------------------------------------------------------------ сеть: интерполяция

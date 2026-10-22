@@ -88,6 +88,17 @@ namespace SW.Commander
                 if (Keys.Down(KeyCode.Y)) Order(OrderType.Defend, cc.AimPoint, cc.transform.eulerAngles.y);
                 if (Keys.Down(KeyCode.V)) CycleRoe();
             }
+            // в RTS-режиме приказы с клавиатуры — в точку под курсором
+            if (tactical && Radial == RadialKind.None && TacticalView.I.CursorValid && !UI.BattleHud.PointerOverUi)
+            {
+                var pnt = TacticalView.I.CursorPoint;
+                if (Keys.Down(KeyCode.F)) Order(OrderType.Move, pnt);
+                if (Keys.Down(KeyCode.T)) Order(OrderType.Attack, pnt);
+                if (Keys.Down(KeyCode.Y)) Order(OrderType.Defend, pnt);
+                if (Keys.Down(KeyCode.H)) Order(OrderType.Hold, SelectedSquads.Any() ? SelectedSquads.First().Center : pnt);
+                if (Keys.Down(KeyCode.G) && B.LocalCommander && !B.LocalCommander.Dead) Order(OrderType.Follow, B.LocalCommander.transform.position);
+                if (Keys.Down(KeyCode.V)) CycleRoe();
+            }
             UpdateRadial();
         }
 

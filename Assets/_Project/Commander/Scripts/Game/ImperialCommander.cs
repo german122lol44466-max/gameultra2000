@@ -21,6 +21,7 @@ namespace SW.Commander
         readonly Dictionary<Squad, int> patrolIndex = new Dictionary<Squad, int>();
         readonly Dictionary<Squad, CommandPost> patrolPost = new Dictionary<Squad, CommandPost>();
         int squadNo = 1;
+        readonly Dictionary<Squad, CommandPost> roadPatrols = new Dictionary<Squad, CommandPost>();
 
         static readonly string[] Units = { "TK", "FN", "TX", "TR", "SC", "DT", "LS", "ST" };
 
@@ -91,6 +92,18 @@ namespace SW.Commander
                     list.Add(pt);
                 }
                 garrisons[cp] = list;
+            }
+            // патрули по дорогам между аванпостами
+            var held = CommandPost.All.Where(c => c.Owner == PostOwner.Empire && !c.IsBase).ToList();
+            for (int i = 0; i < 1 + battle.Settings.EmpireStrength && held.Count >= 2; i++)
+            {
+                var from = held[i % held.Count];
+                var rp = Make(from, "Патруль дорог", 5 + battle.Settings.Difficulty, Role.Rifleman, FormationType.DoubleColumn);
+                rp.Gait = Gait.Patrol;
+                rp.Stance = Stance.Ready;
+                var to = held[(i + 1) % held.Count];
+                rp.SetOrder(OrderType.Move, to.transform.position + Vector3.right * 20f);
+                roadPatrols[rp] = to;
             }
             thinkAt = Time.time + 5f;
             waveAt = Time.time + 120f - battle.Settings.Difficulty * 20f;
@@ -207,6 +220,20 @@ namespace SW.Commander
                     int i = (patrolIndex[sq] + 1) % cp.Patrol.Length;
                     patrolIndex[sq] = i;
                     if (cp.Patrol[i]) sq.SetOrder(OrderType.Move, cp.Patrol[i].position);
+                }
+            }
+            foreach (var kv in roadPatrols.ToList())
+            {
+                var sq = kv.Key;
+                if (sq.Members.Count == 0) { roadPatrols.Remove(sq); continue; }
+                if (sq.Order != OrderType.Move || sq.InCombat) continue;
+                if ((sq.Anchor - sq.OrderPos).sqrMagnitude < 9f && !sq.Moving)
+                {
+                    var held = CommandPost.All.Where(c => c.Owner == PostOwner.Empire && !c.IsBase && c != kv.Value).ToList();
+                    if (held.Count == 0) { sq.SetOrder(OrderType.Defend, sq.Anchor); roadPatrols.Remove(sq); continue; }
+                    var next = held[Random.Range(0, held.Count)];
+                    roadPatrols[sq] = next;
+                    sq.SetOrder(OrderType.Move, next.transform.position + Random.insideUnitSphere.normalized * 22f);
                 }
             }
             // атакующие группы: дошли до цели и пункт свой — переходят в оборону

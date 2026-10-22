@@ -15,7 +15,7 @@ namespace SW.Commander.UI
         Open open;
         bool deployShown, resultsShown;
         int deployPost = -1;
-        Label deployTimer;
+        Label deployTimer, waitText;
         Button deployBtn;
         // казарма
         ushort armySquad;
@@ -38,7 +38,8 @@ namespace SW.Commander.UI
             Ui.Text(wc, "STAR WARS · КОМАНДИР КЛОНОВ", "brand-small");
             Ui.Text(wc, "ВЫСАДКА НА ФЕЛЛУСИЮ", "h1");
             Ui.Box(wc, "loading-bar-bg");
-            Ui.Text(wc, "Ожидание остальных игроков...", "small", "muted").style.marginTop = 14;
+            waitText = Ui.Text(wc, "Ожидание остальных игроков...", "small", "muted");
+            waitText.style.marginTop = 14;
             var tip = Ui.Text(wc, Tips[Random.Range(0, Tips.Length)], "tip");
         }
 
@@ -72,7 +73,11 @@ namespace SW.Commander.UI
             var s = NetSession.Instance;
             bool began = s && s.Phase == SessionPhase.InGame;
             Ui.Show(waiting, !began);
-            if (!began) return;
+            if (!began)
+            {
+                if (waitText != null) waitText.text = string.IsNullOrEmpty(BattleNet.NavStatus) ? "Ожидание остальных игроков..." : BattleNet.NavStatus;
+                return;
+            }
             if (!Keys.Typing)
             {
                 if (Keys.Down(KeyCode.Escape))
@@ -311,6 +316,17 @@ namespace SW.Commander.UI
         // ================================================================== высадка
         void OnDied()
         {
+            // в RTS-режиме командование продолжается; высадка — по Tab или кнопке
+            if (TacticalView.I && TacticalView.I.Active)
+            {
+                Notice("Командир погиб. Армия ждёт приказов. Tab — высадить нового командира", new Color(1f, 0.55f, 0.35f));
+                return;
+            }
+            ShowDeploy();
+        }
+
+        void ShowDeploy()
+        {
             deployShown = true;
             if (TacticalView.I && TacticalView.I.Active) TacticalView.I.Exit();
             if (open != Open.None) Toggle(open);
@@ -321,9 +337,11 @@ namespace SW.Commander.UI
 
         void OnSpawned(Soldier s)
         {
+            bool was = deployShown;
             deployShown = false;
             Ui.Show(deploy, false);
-            CommanderController.Blocked = open != Open.None || resultsShown;
+            CommanderController.Blocked = open != Open.None || resultsShown || (TacticalView.I && TacticalView.I.Active);
+            if (was && TacticalView.I && !TacticalView.I.Active) TacticalView.I.Enter();   // после высадки — снова над полем боя
         }
 
         void BuildDeploy()
